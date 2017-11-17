@@ -3,7 +3,7 @@ public class PriorityQueue {
 	/**
 	 * This is an array that will represent the heap
 	 */
-	private int[] heap;
+	private QueueNode[] heap;
 	/**
 	 * The last index of the array that is representing 
 	 * the heap
@@ -48,7 +48,7 @@ public class PriorityQueue {
 		//else
 			//checkCapacity(startingSize);
 		
-		int[] tempHeap = new int[startingSize + 1];
+		QueueNode[] tempHeap = new QueueNode[startingSize + 1];
 		heap = tempHeap;
 		lastIndex = 0;
 		initialized = true;
@@ -61,7 +61,7 @@ public class PriorityQueue {
 	 * recursively on the heap until the heap is heapified
 	 * @param data
 	 */
-	public PriorityQueue(int[] data){
+	public PriorityQueue(QueueNode[] data){
 		this((data.length));
 		lastIndex = heap.length - 1;
 		assert initialized = true;
@@ -77,30 +77,33 @@ public class PriorityQueue {
 	 * This method adds to the heap with a series of integers, making all the 
 	 * swaps needed to make the array a heap
 	 */
-	public void add(int entry) {
+	
+	
+	public void add(CityNode cityEntry, int distance) {
 		
 		checkInitialization();
 	
 		int newIndex = lastIndex + 1;
 		int parentIndex = newIndex / 2;
-		while((parentIndex > 0) && (entry < heap[parentIndex])) {
+		while((parentIndex > 0) && (distance < heap[parentIndex].distance)) {
 			heap[newIndex] = heap[parentIndex];
 			seriesSwaps++;
 			newIndex = parentIndex;
 			parentIndex = newIndex / 2;
 		}
-		heap[newIndex] = entry;
+		heap[newIndex] = new QueueNode(cityEntry, distance);
 		lastIndex++;
 		
 		
 	}
 	
+	
 	/**
 	 * This removes the max number in the array representing the heap
 	 */
-	public int removeMin() {
+	public QueueNode removeMin() {
 		checkInitialization();
-		int root = 0;
+		QueueNode root = null;
 		if(!isEmpty()) {
 			root = heap[1];
 			heap[1] = heap[lastIndex];
@@ -108,7 +111,7 @@ public class PriorityQueue {
 			reheap(1);
 			
 			if((lastIndex + 1) <= heap.length )
-				heap[lastIndex + 1] = 0;
+				heap[lastIndex + 1] = null;
 		}
 		return root;
 	}
@@ -116,8 +119,8 @@ public class PriorityQueue {
 	/**
 	 * This returns the max number in the array representing the max heap
 	 */
-	public int getMax() {
-		int root = 0;
+	public QueueNode getMin() {
+		QueueNode root = null;
 		if(!isEmpty())
 			root = heap[1];
 		return root;
@@ -168,7 +171,7 @@ public class PriorityQueue {
 	 */
 	private void reheap(int rootIndex) {
 		boolean done = false;
-		int orphan = heap[rootIndex];
+		QueueNode orphan = heap[rootIndex];
 		int leftChildIndex = 2 * rootIndex;
 		
 		while(!done && (leftChildIndex <= lastIndex )){
@@ -176,10 +179,10 @@ public class PriorityQueue {
 			int rightChildIndex = leftChildIndex + 1;
 			
 				
-			if((rightChildIndex <= lastIndex  && heap[rightChildIndex] < heap[largerChildIndex])) 
+			if((rightChildIndex <= lastIndex  && heap[rightChildIndex].distance < heap[largerChildIndex].distance)) 
 				largerChildIndex = rightChildIndex;
 			
-			if(orphan > heap[largerChildIndex]) {
+			if(orphan.distance > heap[largerChildIndex].distance) {
 				heap[rootIndex] = heap[largerChildIndex];
 				optimalSwaps++;
 				rootIndex = largerChildIndex;
@@ -196,7 +199,7 @@ public class PriorityQueue {
 	 * @param index searching for
 	 * @return data in index
 	 */
-	public int getHeapIndexData(int index) {
+	public QueueNode getHeapIndexData(int index) {
 		return heap[index];
 	}
 	public int getLastIndex(){
@@ -206,7 +209,7 @@ public class PriorityQueue {
 	 * returns array representing heap to engine
 	 * @return heap array
 	 */
-	public int[] getHeap() {
+	public QueueNode[] getHeap() {
 		return heap;
 	}
 	
@@ -223,10 +226,10 @@ public class PriorityQueue {
 	 * @param entry being check for duplicates
 	 * @return if the entry is already in heap
 	 */
-	public boolean contains(int entry){
+	public boolean contains(QueueNode node){
 		boolean contains = false;
 		for(int i = 0; i < heap.length; i++){
-			if(heap[i] == entry)
+			if(heap[i] == node)
 				contains = true;
 		}
 		return contains;
@@ -248,3 +251,25 @@ public class PriorityQueue {
 		return optimalSwaps;
 	}
 }
+
+class QueueNode{
+	
+	CityNode city;
+	int distance;
+	CityNode previous;
+	
+	public QueueNode(CityNode city, int distance, CityNode previous) {
+	
+		this.city = city;
+		this.distance = distance;
+		this.previous = previous;
+		
+	}
+	public QueueNode(CityNode city, int distance) {
+		
+		this.city = city;
+		this.distance = distance;
+		
+	}
+}
+

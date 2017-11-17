@@ -53,8 +53,8 @@ public class Engine {
 	}
 	
 	public void createGraph(RoadNode[] roadNodes) throws FileNotFoundException {
-		//scanCity();
-		graph = new Digraph(getCityNodes().length);
+		scanCity();
+		graph = new Digraph(getCityNodes().length, getCityNodes());
 		//scanRoad();
 		
 		for(int i = 0; i < roadNodes.length; i++)
@@ -164,6 +164,3 @@ public class Engine {
 	
 	
 }
-
-
-
