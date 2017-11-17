@@ -7,7 +7,7 @@ public class Digraph {
 	 RoadNode[] roadNodes;
 	 int[] distance;
 	 int[] previous;
-	 ArrayList<Integer> visted;
+	 ArrayList<Integer> visited;
 	 PriorityQueue queue;
 	 
 	
@@ -16,7 +16,7 @@ public class Digraph {
 		graphMatrix = new int[vertices + 1][vertices + 1];
 		distance = new int[vertices];
 		previous = new int[vertices];
-		visted = new ArrayList<>
+		visited = new ArrayList<>();
 		this.cityNodes = cityNodes;
 	}
 	
@@ -78,31 +78,33 @@ public class Digraph {
 			
 			
 		}
-	    private void evaluateNeighbours(int evaluationNode)
-	    {
-	        int edgeDistance = -1;
-	        int newDistance = -1;
-	 
-	        for (int destinationNode = 1; destinationNode <= number_of_nodes; destinationNode++)
-	        {
-	            if (!settled.contains(destinationNode))
-	            {
-	                if (adjacencyMatrix[evaluationNode][destinationNode] != Integer.MAX_VALUE)
-	                {
-	                    edgeDistance = adjacencyMatrix[evaluationNode][destinationNode];
-	                    newDistance = distances[evaluationNode] + edgeDistance;
-	                    if (newDistance < distances[destinationNode])
-	                    {
-	                        distances[destinationNode] = newDistance;
-	                    }
-	                    priorityQueue.add(new Node(destinationNode,distances[destinationNode]));
-	                }   
-	            }
-	        }
-	    }
 		
 		
 	}
+	
+	
+	public void evaluateNeighbours(int from)
+    {
+        int edgeDistance = -1;
+        int newDistance = -1;
+ 
+        for (int to = 0; to < vertices; to++)
+        {
+            if (!visited.contains(to))
+            {
+                if (graphMatrix[from][to] != Integer.MAX_VALUE)
+                {
+                    edgeDistance = graphMatrix[from][to];
+                    newDistance = distance[from] + edgeDistance;
+                    if (newDistance < distance[to])
+                    {
+                        distance[to] = newDistance;
+                    }
+                    queue.add(cityNodes[to],distance[to]);
+                }   
+            }
+        }
+    }
 	
 }
 
