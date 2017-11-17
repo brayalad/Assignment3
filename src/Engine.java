@@ -25,7 +25,10 @@ public class Engine {
 		scanCity();
 		test(getCityNodes());
 		scanRoad();
-		test(getRoadNodes());
+		//test(getRoadNodes());
+		
+		createGraph(getRoadNodes());
+		printGraph(graph);
 		
 		
 	}
@@ -37,7 +40,7 @@ public class Engine {
 		
 	}
 	public void test(RoadNode[] roadNodes) {
-		
+	
 		for(int i = 0; i < roadNodes.length; i++)
 			System.out.println(roadNodes[i]);
 		
@@ -49,14 +52,30 @@ public class Engine {
 		return stringData;
 	}
 	
-	public void createGraph() throws FileNotFoundException {
-		scanCity();
+	public void createGraph(RoadNode[] roadNodes) throws FileNotFoundException {
+		//scanCity();
 		graph = new Digraph(getCityNodes().length);
+		//scanRoad();
 		
-		
-		
-		
+		for(int i = 0; i < roadNodes.length; i++)
+			graph.addEdge(roadNodes[i].from, roadNodes[i].to, roadNodes[i].edge);
 	}
+	public void printGraph(Digraph graph) {
+		System.out.println("The adjacency matrix for the given graph is: ");
+        System.out.print("  ");
+        for (int i = 1; i <= graph.vertices; i++)
+            System.out.print(i + " ");
+        System.out.println();
+
+        for (int i = 1; i <= graph.vertices; i++) 
+        {
+            System.out.print(i + " ");
+            for (int j = 1; j <= graph.vertices; j++) 
+                System.out.print(graph.getEdge(i, j) + " ");
+            System.out.println();
+        }
+
+    }
 	
 	public void printHeap(int[] heap, int lastIndex){
 		
@@ -83,23 +102,22 @@ public class Engine {
 			cityNodeList = new ArrayList<>();
 		
 		while(readFile.hasNext()) {
-			String cityNumberString = readFile.next();
+			int cityNumber = Integer.parseInt(readFile.next()); 
 			String cityCode = readFile.next();
 			String fullCityName = null;
 			//if(cityNumber.equals("4|5|6|7|11|12|13|14|16|17")) {
-			if(cityNumberString.equals("4") || cityNumberString.equals("5") || cityNumberString.equals("6") || cityNumberString.equals("7") ||
-			   cityNumberString.equals("11") || cityNumberString.equals("9") ||  cityNumberString.equals("12") || cityNumberString.equals("13") ||
-			   cityNumberString.equals("14") || cityNumberString.equals("16") || cityNumberString.equals("17")) {
+			if(cityNumber == 4 || cityNumber == 5 || cityNumber == 6 || 
+			   cityNumber == 7 || cityNumber == 9 || cityNumber == 11|| 
+			   cityNumber == 12|| cityNumber == 13|| cityNumber == 14|| 
+			   cityNumber == 16|| cityNumber == 17) {
 				fullCityName = readFile.next() + " " + readFile.next();
 			}
 			else
 				fullCityName = readFile.next();
-			String populationString = readFile.next();
-			String elevationString = readFile.next();
 			
-			int cityNumber = Integer.parseInt(cityNumberString);
-			int population = Integer.parseInt(populationString);
-			int elevation = Integer.parseInt(elevationString);
+			
+			int population = Integer.parseInt(readFile.next());
+			int elevation = Integer.parseInt(readFile.next());
 			
 			cityNodeList.add(new CityNode(cityNumber, cityCode, fullCityName, population, elevation));
 		}

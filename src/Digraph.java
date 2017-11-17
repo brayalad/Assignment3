@@ -1,7 +1,7 @@
 
 public class Digraph {
 
-	private int vertices;
+	 int vertices;
 	private int[][] graphMatrix;
 	
 	public Digraph(int vertices) {
@@ -9,13 +9,17 @@ public class Digraph {
 		graphMatrix = new int[vertices + 1][vertices + 1];
 	}
 	
-	public void addEdge(int to, int from, int edge) {
+	public void addEdge(int from, int to, int edge) {
 		
-		graphMatrix[to][from] = edge;
+		graphMatrix[from][to] = edge;
 		
 	}
 	
+	public int getEdge(int from, int to) {
 	
+		return graphMatrix[from][to];
+		
+	}
 	
 	
 	
