@@ -25,7 +25,7 @@ public class Road {
 
 	
 	public String toString() {
-		return "From: " + from + "\nto: " + to + "\nedge: " + weight + "\n";
+		return "From: " + from + "\n to: " + to + "\n edge: " + weight + "\n";
 	}
 	
 }

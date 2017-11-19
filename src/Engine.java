@@ -23,12 +23,12 @@ public class Engine {
 	public void start() throws IOException{
 		
 		scanCity();
-		test(getCityNodes());
+		//test(getCityNodes());
 		scanRoad();
 		//printArray(getRoadNodes());
 		createGraph(getRoadNodes());
 		//printGraph(graph);
-		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 7);
+		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 1);
 		printArray(dijkstra.dikstra());
 		
 		
@@ -65,8 +65,10 @@ public class Engine {
 		graph = new Digraph(getCityNodes().length, getCityNodes());
 		//scanRoad();
 		
-		for(int i = 0; i < roadNodes.length; i++)
+		for(int i = 1; i < roadNodes.length; i++) {
+			//System.out.print(roadNodes[i] + " ");
 			graph.addEdge(roadNodes[i].from.getCityNumber(), roadNodes[i].to.getCityNumber(), roadNodes[i].getWeight());
+		}
 	}
 	public void printGraph(Digraph graph) {
 		System.out.println("The adjacency matrix for the given graph is: ");
@@ -146,24 +148,24 @@ public class Engine {
 			int distance = Integer.parseInt(readFile.next());
 		
 		
-		roadNodeList.add(new Road(getCityNodes()[from-1], getCityNodes()[to-1], distance));
+		roadNodeList.add(new Road(getCityNodes()[from], getCityNodes()[to], distance));
 		}
 	}
 	
 	public City[] getCityNodes() {
-		City[] cityNodes = new City[cityNodeList.size()];
+		City[] cityNodes = new City[cityNodeList.size()+1];
 		
-		for(int i = 0; i < cityNodes.length; i++)
-			cityNodes[i] = cityNodeList.get(i);
+		for(int i = 1; i < cityNodes.length; i++)
+			cityNodes[i] = cityNodeList.get(i-1);
 		
 		return cityNodes;
 		
 	}
 	public Road[] getRoadNodes() {
-		Road[] roadNodes = new Road[roadNodeList.size()];
+		Road[] roadNodes = new Road[roadNodeList.size()+1];
 		
-		for(int i = 0; i < roadNodes.length; i++)
-			roadNodes[i] = roadNodeList.get(i);
+		for(int i = 1; i < roadNodes.length; i++)
+			roadNodes[i] = roadNodeList.get(i-1);
 		
 		return roadNodes;
 		

@@ -93,8 +93,7 @@ public class PriorityQueue {
 		}
 		heap[newIndex] = new QueueNode(cityEntry, distance);
 		lastIndex++;
-		System.out.println(cityEntry);
-		System.out.println("test3");
+		
 		
 	}
 	
@@ -141,11 +140,11 @@ public class PriorityQueue {
 	
 	
 	public int searchRemoveIndex(int cityCode) {
-		System.out.println(cityCode);
+		//System.out.println(cityCode);
 		int removalIndex = 0;
-		System.out.print("Test: ");
-		for(int i = 1; i <= heap.length+1; i++) {
-			System.out.print( heap[i].getCityCode() + " ");
+		//System.out.print("Test: ");
+		for(int i = 1; i <= lastIndex; i++) {
+			//System.out.print( heap[i].getCityCode() + " ");
 			if(cityCode == heap[i].getCityCode())
 				removalIndex = i;
 		}
@@ -216,7 +215,7 @@ public class PriorityQueue {
 			int rightChildIndex = leftChildIndex + 1;
 			
 				
-			if((rightChildIndex <= lastIndex  && heap[rightChildIndex].distance < heap[largerChildIndex].distance)) 
+			if((rightChildIndex <= lastIndex  && heap[rightChildIndex].getDistance() < heap[largerChildIndex].getDistance())) 
 				largerChildIndex = rightChildIndex;
 			
 			if(orphan.distance > heap[largerChildIndex].distance) {

@@ -17,54 +17,54 @@ public class Dijkstra {
 		availableVertices = new PriorityQueue(graph.getGraphMatrix().length);
 		predececor = new int[graph.getGraphMatrix().length];
 		this.cityNodes = cityNodes;
-		System.out.println(graph.getGraphMatrix().length);
+		//System.out.println(graph.getGraphMatrix().length);
 	}
 	
 	public int[] dikstra() {
 		
-		for(int v = 0; v < graphMatrix.length-1; v++) {
+		for(int v = 1; v < graphMatrix.length-1; v++) {
 		
-			if((v+1) == source)
+			if((v) == source)
 				distance[v] = 0;
 			else {
 				distance[v] = Integer.MAX_VALUE;
 				predececor[v] = 0;
-				System.out.println("test1");
+				
 				availableVertices.add(cityNodes[v], distance[v]);
-				System.out.println("test2");
+				
 			}
 		
 			
 			
 			
 		}
-		System.out.println(availableVertices.getLastIndex());
+		//System.out.println(availableVertices.getLastIndex());
 		
-		printArray(availableVertices.getHeap());
+		printArray(availableVertices.getHeap(), availableVertices.getLastIndex());
 			
 		
 		
 		
 		while(!availableVertices.isEmpty()) {
 			
-			int u = availableVertices.removeMin().city.getCityNumber() - 1;
+			int u = availableVertices.removeMin().city.getCityNumber();
 			
-			for(int v = 0; v < graphMatrix.length; v++) {
+			for(int v = 1; v < graphMatrix.length-1; v++) {
 				if(graphMatrix[u][v] != 0) {
 					
 					int alt = distance[u] + graphMatrix[u][v];
 					if(alt < distance[v]) {
 						
 						distance[v] = alt;
-						predececor[v] = u+1;
-						System.out.println(v);
-						//System.out.println(availableVertices.searchRemoveIndex(v));
+						predececor[v] = u;
+						
+						//System.out.print(availableVertices.searchRemoveIndex(v+1) + " ");
 						availableVertices.remove(v);
 						availableVertices.add(cityNodes[v], distance[v]);
 					}
 					
 				}
-				
+				//printArray(availableVertices.getHeap(), availableVertices.getLastIndex());
 				
 			}
 			
@@ -76,8 +76,10 @@ public class Dijkstra {
 		
 	}
 	
-	public void printArray(QueueNode[] heap) {
-		for(int i = 0; i < heap.length; i++ )
+	public void printArray(QueueNode[] heap,int lastIndex) {
+		for(int i = 1; i <= lastIndex; i++ )
 			System.out.println(heap[i]);
+		System.out.println();
 	}
+		
 }
