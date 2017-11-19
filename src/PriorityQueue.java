@@ -122,10 +122,12 @@ public class PriorityQueue {
 		
 		QueueNode deleted = null;
 		if(!isEmpty()) {
-			deleted = heap[searchRemoveIndex(cityCode)];
-			heap[searchRemoveIndex(cityCode)] = heap[lastIndex];
+			int removeIndex = searchRemoveIndex(cityCode);
+			//System.out.println(removeIndex);
+			deleted = heap[removeIndex];
+			heap[removeIndex] = heap[lastIndex];
 			lastIndex--;
-			reheap(searchRemoveIndex(cityCode));
+			reheap(removeIndex);
 			
 			if((lastIndex + 1) <= heap.length )
 				heap[lastIndex + 1] = null;
@@ -140,11 +142,11 @@ public class PriorityQueue {
 	
 	
 	public int searchRemoveIndex(int cityCode) {
-		//System.out.println(cityCode);
+		
 		int removalIndex = 0;
-		//System.out.print("Test: ");
+	
 		for(int i = 1; i <= lastIndex; i++) {
-			//System.out.print( heap[i].getCityCode() + " ");
+			
 			if(cityCode == heap[i].getCityCode())
 				removalIndex = i;
 		}
@@ -320,7 +322,7 @@ class QueueNode{
 	return cityCode;
 	}
 	public String toString() {
-		return ""+ city+ " "+ distance+" "+cityCode;
+		return ""+ city+ " "+ distance;
 	}
 }
 

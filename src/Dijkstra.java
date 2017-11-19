@@ -30,17 +30,17 @@ public class Dijkstra {
 				distance[v] = Integer.MAX_VALUE;
 				predececor[v] = 0;
 				
-				availableVertices.add(cityNodes[v], distance[v]);
+				
 				
 			}
 		
-			
+			availableVertices.add(cityNodes[v], distance[v]);
 			
 			
 		}
 		//System.out.println(availableVertices.getLastIndex());
 		
-		printArray(availableVertices.getHeap(), availableVertices.getLastIndex());
+		//printArray(availableVertices.getHeap(), availableVertices.getLastIndex());
 			
 		
 		
@@ -48,17 +48,19 @@ public class Dijkstra {
 		while(!availableVertices.isEmpty()) {
 			
 			int u = availableVertices.removeMin().city.getCityNumber();
-			
+			//System.out.println(u);
 			for(int v = 1; v < graphMatrix.length-1; v++) {
 				if(graphMatrix[u][v] != 0) {
 					
 					int alt = distance[u] + graphMatrix[u][v];
+					//System.out.println(alt);
 					if(alt < distance[v]) {
 						
 						distance[v] = alt;
 						predececor[v] = u;
 						
-						//System.out.print(availableVertices.searchRemoveIndex(v+1) + " ");
+						//System.out.println(availableVertices.searchRemoveIndex(v) + " ");
+						//System.out.println(v);
 						availableVertices.remove(v);
 						availableVertices.add(cityNodes[v], distance[v]);
 					}
@@ -70,7 +72,7 @@ public class Dijkstra {
 			
 		}
 		
-		
+		printArray();
 		return distance;
 		
 		
@@ -81,5 +83,9 @@ public class Dijkstra {
 			System.out.println(heap[i]);
 		System.out.println();
 	}
-		
+		public void printArray() {
+			for(int i = 1; i < predececor.length; i++)
+			System.out.print(predececor[i] + " ");
+			System.out.println();
+		}
 }

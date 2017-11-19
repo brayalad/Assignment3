@@ -27,7 +27,8 @@ public class Engine {
 		scanRoad();
 		//printArray(getRoadNodes());
 		createGraph(getRoadNodes());
-		//printGraph(graph);
+		printGraph(graph);
+		test(getCityNodes());
 		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 1);
 		printArray(dijkstra.dikstra());
 		
@@ -37,9 +38,9 @@ public class Engine {
 	
 	public void test(City[] cityNodes) {
 		
-		for(int i = 0; i < cityNodes.length; i++)
-			System.out.println(cityNodes[i]);
-		
+		for(int i = 1; i < cityNodes.length; i++)
+			System.out.print(cityNodes[i].getCityNumber() + " ");
+		System.out.println();
 	}
 	public void test(Road[] roadNodes) {
 	
@@ -48,9 +49,9 @@ public class Engine {
 		
 	}
 	
-	public void printArray(int[] previous) {
-		for(int i = 0; i < previous.length; i++)
-			System.out.print(previous[i] + " ");
+	public void printArray(int[] distance) {
+		for(int i = 1; i < distance.length; i++)
+			System.out.print(distance[i] + " ");
 	}
 	
 	
@@ -84,7 +85,7 @@ public class Engine {
                 System.out.print(graph.getEdge(i, j) + " ");
             System.out.println();
         }
-
+        System.out.println();
     }
 	
 	public void printHeap(int[] heap, int lastIndex){
