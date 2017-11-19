@@ -19,6 +19,14 @@ public class Digraph {
 		visited = new ArrayList<>();
 		this.cityNodes = cityNodes;
 	}
+	public Digraph(int vertices, City[] cityNodes, int[][] test) {
+		this.vertices = vertices;
+		graphMatrix = test;
+		distance = new int[vertices];
+		previous = new int[vertices];
+		visited = new ArrayList<>();
+		this.cityNodes = cityNodes;
+	}
 	
 	public void addEdge(int from, int to, int edge) {
 		

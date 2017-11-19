@@ -12,6 +12,16 @@ public class Engine {
 	private Digraph graph;
 	private ArrayList<City> cityNodeList;
 	private ArrayList<Road> roadNodeList;
+	Digraph testGraph;
+	
+	
+	private int[][] test = new int[][] {{ 0, 66, 390, 0, 0 },
+										{ 732, 0, 17, 0, 0 },
+										{ 0, 0, 0, 273, 0 },
+										{ 212, 0, 0, 0, 122 },
+										{ 0, 0, 0, 29, 0 },
+														};
+		
 	
 	public Engine(UserInterface ui){
 		this.ui = ui;
@@ -27,15 +37,20 @@ public class Engine {
 		scanRoad();
 		//printArray(getRoadNodes());
 		createGraph(getRoadNodes());
+		//printGraph(graph);
+		//createGraphTest();
+		//System.out.println(testGraph.getGraphMatrix()[1][0]);
 		printGraph(graph);
 		test(getCityNodes());
-		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 1);
+		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 17);
 		printArray(dijkstra.dikstra());
 		
 		
 		
 	}
-	
+	public void createGraphTest() {
+		testGraph = new Digraph(5, getCityNodes(), test);
+	}
 	public void test(City[] cityNodes) {
 		
 		for(int i = 1; i < cityNodes.length; i++)
