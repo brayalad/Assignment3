@@ -10,8 +10,8 @@ public class Engine {
 	private Scanner input = new Scanner(System.in);
 	private Scanner readFile;
 	private Digraph graph;
-	private ArrayList<CityNode> cityNodeList;
-	private ArrayList<RoadNode> roadNodeList;
+	private ArrayList<City> cityNodeList;
+	private ArrayList<Road> roadNodeList;
 	
 	public Engine(UserInterface ui){
 		this.ui = ui;
@@ -25,26 +25,34 @@ public class Engine {
 		scanCity();
 		test(getCityNodes());
 		scanRoad();
-		//test(getRoadNodes());
-		
+		//printArray(getRoadNodes());
 		createGraph(getRoadNodes());
-		printGraph(graph);
+		//printGraph(graph);
+		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 7);
+		printArray(dijkstra.dikstra());
+		
 		
 		
 	}
 	
-	public void test(CityNode[] cityNodes) {
+	public void test(City[] cityNodes) {
 		
 		for(int i = 0; i < cityNodes.length; i++)
 			System.out.println(cityNodes[i]);
 		
 	}
-	public void test(RoadNode[] roadNodes) {
+	public void test(Road[] roadNodes) {
 	
 		for(int i = 0; i < roadNodes.length; i++)
 			System.out.println(roadNodes[i]);
 		
 	}
+	
+	public void printArray(int[] previous) {
+		for(int i = 0; i < previous.length; i++)
+			System.out.print(previous[i] + " ");
+	}
+	
 	
 	public String []getData(){
 		String[] stringData = new String[5];
@@ -52,13 +60,13 @@ public class Engine {
 		return stringData;
 	}
 	
-	public void createGraph(RoadNode[] roadNodes) throws FileNotFoundException {
+	public void createGraph(Road[] roadNodes) throws FileNotFoundException {
 		scanCity();
 		graph = new Digraph(getCityNodes().length, getCityNodes());
 		//scanRoad();
 		
 		for(int i = 0; i < roadNodes.length; i++)
-			graph.addEdge(roadNodes[i].from, roadNodes[i].to, roadNodes[i].edge);
+			graph.addEdge(roadNodes[i].from.getCityNumber(), roadNodes[i].to.getCityNumber(), roadNodes[i].getWeight());
 	}
 	public void printGraph(Digraph graph) {
 		System.out.println("The adjacency matrix for the given graph is: ");
@@ -119,7 +127,7 @@ public class Engine {
 			int population = Integer.parseInt(readFile.next());
 			int elevation = Integer.parseInt(readFile.next());
 			
-			cityNodeList.add(new CityNode(cityNumber, cityCode, fullCityName, population, elevation));
+			cityNodeList.add(new City(cityNumber, cityCode, fullCityName, population, elevation));
 		}
 		
 	}
@@ -138,12 +146,12 @@ public class Engine {
 			int distance = Integer.parseInt(readFile.next());
 		
 		
-		roadNodeList.add(new RoadNode(from, to, distance));
+		roadNodeList.add(new Road(getCityNodes()[from-1], getCityNodes()[to-1], distance));
 		}
 	}
 	
-	public CityNode[] getCityNodes() {
-		CityNode[] cityNodes = new CityNode[cityNodeList.size()];
+	public City[] getCityNodes() {
+		City[] cityNodes = new City[cityNodeList.size()];
 		
 		for(int i = 0; i < cityNodes.length; i++)
 			cityNodes[i] = cityNodeList.get(i);
@@ -151,8 +159,8 @@ public class Engine {
 		return cityNodes;
 		
 	}
-	public RoadNode[] getRoadNodes() {
-		RoadNode[] roadNodes = new RoadNode[roadNodeList.size()];
+	public Road[] getRoadNodes() {
+		Road[] roadNodes = new Road[roadNodeList.size()];
 		
 		for(int i = 0; i < roadNodes.length; i++)
 			roadNodes[i] = roadNodeList.get(i);

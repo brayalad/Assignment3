@@ -79,7 +79,7 @@ public class PriorityQueue {
 	 */
 	
 	
-	public void add(CityNode cityEntry, int distance) {
+	public void add(City cityEntry, int distance) {
 		
 		checkInitialization();
 	
@@ -93,7 +93,8 @@ public class PriorityQueue {
 		}
 		heap[newIndex] = new QueueNode(cityEntry, distance);
 		lastIndex++;
-		
+		System.out.println(cityEntry);
+		System.out.println("test3");
 		
 	}
 	
@@ -115,6 +116,42 @@ public class PriorityQueue {
 		}
 		return root;
 	}
+	
+	
+	
+	public QueueNode remove(int cityCode) {
+		
+		QueueNode deleted = null;
+		if(!isEmpty()) {
+			deleted = heap[searchRemoveIndex(cityCode)];
+			heap[searchRemoveIndex(cityCode)] = heap[lastIndex];
+			lastIndex--;
+			reheap(searchRemoveIndex(cityCode));
+			
+			if((lastIndex + 1) <= heap.length )
+				heap[lastIndex + 1] = null;
+		}
+		
+		
+		
+		
+		
+		return deleted;
+	}
+	
+	
+	public int searchRemoveIndex(int cityCode) {
+		System.out.println(cityCode);
+		int removalIndex = 0;
+		System.out.print("Test: ");
+		for(int i = 1; i <= heap.length+1; i++) {
+			System.out.print( heap[i].getCityCode() + " ");
+			if(cityCode == heap[i].getCityCode())
+				removalIndex = i;
+		}
+		return removalIndex;
+	}
+	
 	
 	/**
 	 * This returns the max number in the array representing the max heap
@@ -254,22 +291,37 @@ public class PriorityQueue {
 
 class QueueNode{
 	
-	CityNode city;
+	City city;
+	int cityCode;
 	int distance;
-	CityNode previous;
+	City previous;
 	
-	public QueueNode(CityNode city, int distance, CityNode previous) {
+	public QueueNode(City city, int distance, City previous) {
 	
 		this.city = city;
 		this.distance = distance;
 		this.previous = previous;
 		
+		
 	}
-	public QueueNode(CityNode city, int distance) {
+	public QueueNode(City city, int distance) {
 		
 		this.city = city;
 		this.distance = distance;
-		
+		cityCode = city.getCityNumber();
+	}
+	
+	public City getCity() {
+		return city;
+	}
+	public int getDistance() {
+		return distance;
+	}
+	public int getCityCode() {
+	return cityCode;
+	}
+	public String toString() {
+		return ""+ city+ " "+ distance+" "+cityCode;
 	}
 }
 

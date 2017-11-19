@@ -6,3 +6,7 @@
 /Engine.class
 /Digraph.class
 /QueueNode.class
+/Dijkstra.class
+/City.class
+/Road.class
+/DiagraphMatrix.class
