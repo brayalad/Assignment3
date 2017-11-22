@@ -15,42 +15,70 @@ public class Engine {
 	Digraph testGraph;
 	
 	
-	private int[][] test = new int[][] {{ 0, 66, 390, 0, 0 },
-										{ 732, 0, 17, 0, 0 },
-										{ 0, 0, 0, 273, 0 },
-										{ 212, 0, 0, 0, 122 },
-										{ 0, 0, 0, 29, 0 },
-														};
+	
 		
 	
 	public Engine(UserInterface ui){
 		this.ui = ui;
-		queue = new PriorityQueue(9);
 		cityNodeList = new ArrayList<>();
 		roadNodeList = new ArrayList<>();
 	}
 	
+	public void run(){
+		
+		String[] input = ui.getInput();
+		
+		if(input.length == 1){
+			
+			if(input[0].equals("Q") || input[0].equals("q")){
+				
+			}
+			else if(input[0].equals("D") || input[0].equals("d")){
+				
+			}
+			else if(input[0].equals("I") || input[0].equals("i")){
+				
+			}
+			else if(input[0].equals("R") || input[0].equals("H")){
+
+
+			}
+			else if(input[0].equals("H") || input[0].equals("h")){
+				
+			}
+			else if(input[0].equals("E") || input[0].equals("e")){
+				
+			}
+			else
+				ui.error();
+		}
+		else
+			System.out.println("Only one comand");
+		
+		
+		
+	}
+	
+		
+		
+	
 	public void start() throws IOException{
 		
 		scanCity();
-		//test(getCityNodes());
+	
 		scanRoad();
-		//printArray(getRoadNodes());
+	
 		createGraph(getRoadNodes());
-		//printGraph(graph);
-		//createGraphTest();
-		//System.out.println(testGraph.getGraphMatrix()[1][0]);
+	
 		printGraph(graph);
 		test(getCityNodes());
-		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 17);
+		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 3);
 		printArray(dijkstra.dikstra());
 		
 		
 		
 	}
-	public void createGraphTest() {
-		testGraph = new Digraph(5, getCityNodes(), test);
-	}
+	
 	public void test(City[] cityNodes) {
 		
 		for(int i = 1; i < cityNodes.length; i++)
@@ -117,6 +145,59 @@ public class Engine {
 	}
 	
 	
+	public void Query(){
+		
+		String[] searchCityCode = ui.getInput();
+		
+	}
+	
+	public boolean cityExist(String searchCityCode){
+		
+		City[] cities = getCityNodes();
+		
+		for(int i = 1; i < cities.length; i++){
+			
+		}
+		
+		
+		
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public City[] getCityNodes() {
+		City[] cityNodes = new City[cityNodeList.size()+1];
+		
+		for(int i = 1; i < cityNodes.length; i++)
+			cityNodes[i] = cityNodeList.get(i-1);
+		
+		return cityNodes;
+		
+	}
+	public Road[] getRoadNodes() {
+		Road[] roadNodes = new Road[roadNodeList.size()+1];
+		
+		for(int i = 1; i < roadNodes.length; i++)
+			roadNodes[i] = roadNodeList.get(i-1);
+		
+		return roadNodes;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public void scanCity() throws FileNotFoundException {
 		try {
 			readFile = new Scanner(new File("city(2).dat"));
@@ -167,26 +248,6 @@ public class Engine {
 		roadNodeList.add(new Road(getCityNodes()[from], getCityNodes()[to], distance));
 		}
 	}
-	
-	public City[] getCityNodes() {
-		City[] cityNodes = new City[cityNodeList.size()+1];
-		
-		for(int i = 1; i < cityNodes.length; i++)
-			cityNodes[i] = cityNodeList.get(i-1);
-		
-		return cityNodes;
-		
-	}
-	public Road[] getRoadNodes() {
-		Road[] roadNodes = new Road[roadNodeList.size()+1];
-		
-		for(int i = 1; i < roadNodes.length; i++)
-			roadNodes[i] = roadNodeList.get(i-1);
-		
-		return roadNodes;
-		
-	}
-	
 	
 	
 }

@@ -6,23 +6,53 @@ import java.util.regex.Pattern;
 public class UserInterface {
 
 	private Scanner input;
+	private Scanner text;
 	private Pattern pattern;
 	private Matcher matcher;
 	
 	public UserInterface() {
 		input = new Scanner(System.in);
+		text = new Scanner(System.in);
 		pattern = Pattern.compile("[a-zA-Z0-9]*");
 	}
 	
+	public void menu(int operation){
+		
+		switch(operation){
+		
+		case 1: System.out.println("Q Query the city information by entering the city code.\n"
+									+ "D Find the minimum distance between two cities.\n"
+									+ "I Insert a road by entering two city codes and distance.\n"
+									+ "R Remove an existing road by entering two city codes.\n"
+									+ "H Display this message.\n"
+									+ "E Exit.\n");
+				break;
+				
+		case 2: System.out.print("Command?: ");
+				break;
+				
+		case 3: System.out.print("City Code: ");
+				break;
+				
+		case 4: System.out.print("City Codes: ");
+				break;
+				
+		case 5: System.out.print("City Codes and distance: ");
+				break;
+
+		}
+	
+		
+	}
+	
+	
+	
+	
 	public String [] getInput() {
-		
-		
-		
-		System.out.println("Please input command: ");
 		
 		String [] correctArrayOfString = null;
 		
-		String [] arrayOfString = input.nextLine().split(" ");
+		String [] arrayOfString = text.nextLine().split(" ");
 		
 		boolean correct = true;
 		
@@ -44,6 +74,11 @@ public class UserInterface {
 		
 		return correctArrayOfString;
 	}
+	
+	public void error(){
+		System.out.println("Error");
+	}
+	
 	
 	public void print(String [] arrayOfString) {
 		
