@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 import java.util.regex.Matcher;
@@ -48,11 +49,43 @@ public class UserInterface {
 	
 	
 	
+	public void printGraphManipulation(String from, String to, int distance, int operation) {
+		
+		switch(operation) {
+		
+		case 1: System.out.println("You have inserted a road from " + from + " to " + to + " with a distance of " + distance + ".");
+				break;
+		case 2: System.out.println("You have deleted the road from " + from + " to " + to + ".");
+				break;
+		
+		}
+		
+		
+		
+	}
+	
+	public void printShortestPath(String from, String to, int distance, ArrayList<City> path) {
+		
+		System.out.println("The minimum distance between " + from + " and " + to + " is " + distance + " through the route:");
+		
+		for(int i = 0; i < path.size(); i ++)
+			if(i == 0)
+				System.out.print(path.get(i).getCityCode());
+			else
+				System.out.print( ", " + path.get(i).getCityCode());
+	
+		System.out.println();
+	}
 	public String [] getInput() {
 		
 		String [] correctArrayOfString = null;
 		
 		String [] arrayOfString = text.nextLine().split(" ");
+		
+		int possibleNegativeNumber = Integer.MIN_VALUE;
+		
+		
+		
 		
 		boolean correct = true;
 		
@@ -62,8 +95,20 @@ public class UserInterface {
 			if(!matcher.matches()) {
 				for(int j = 0; j < arrayOfString.length; j++) {
 					matcher = pattern.matcher(arrayOfString[j]);
-					if(!matcher.matches())
+					
+					
+					if(j != 2 && !matcher.matches())
 						correct = false;
+					//else {
+						//try {
+							//possibleNegativeNumber = Integer.parseInt(arrayOfString[2]);
+					//	} catch (NumberFormatException e) {
+							
+							//if(!matcher.matches())
+								//correct = false;
+							
+						//}
+					//}
 				}
 			}
 				
@@ -75,10 +120,54 @@ public class UserInterface {
 		return correctArrayOfString;
 	}
 	
-	public void error(){
-		System.out.println("Error");
+	
+	
+	public int getPossibleNegativeNumber(int possibleNegativeNumber) {
+		return possibleNegativeNumber;
 	}
 	
+	public void error(int operation){
+		
+		switch(operation) {
+		
+		case 1: System.out.println("Error: Invalid input. Please enter a command from the menu.\n"
+									+ "       To see the menu, press H");
+				break;
+		case 2: System.out.println("Error: Spaces must be used to seperate inputs");
+				break;
+		case 3: System.out.println("Error: Wrong amount of inputs were entered for this command");
+				break;
+		case 4: System.out.println("Error: City you have entered does not Exist");
+				break;
+		case 5: System.out.println("Error: The departure city you inputed does not exist");
+				break;
+		case 6: System.out.println("Error: The destination city you inputed does not exist");
+				break;
+		case 7: System.out.println("Error: Distance entered must be a number");
+				break;
+		case 8: System.out.println("Error: Distance error can not be negative");
+				break;
+		case 9: System.out.println("       Please try again");
+				break;
+		}
+			
+	}
+	
+	public void error(int operation, String from, String to) {
+		
+switch(operation) {
+		
+		case 1: System.out.println("Error: The road from " + from + " to " + to + " already exist.");
+
+				break;
+		case 2: System.out.println("Error: The road from " + from + " to " + to + " doesn't exist.");
+				break;
+		
+		case 3: System.out.println("       Please try again");
+				break;
+		}
+		
+	}
 	
 	public void print(String [] arrayOfString) {
 		

@@ -34,6 +34,12 @@ public class Digraph {
 		
 	}
 	
+	public void removeEdge(int from, int to) {
+		
+		graphMatrix[from][to] = 0;
+		
+	}
+	
 	public int getEdge(int from, int to) {
 	
 		return graphMatrix[from][to];

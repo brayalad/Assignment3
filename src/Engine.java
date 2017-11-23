@@ -40,9 +40,12 @@ public class Engine {
 			}
 			else if(input[0].equalsIgnoreCase("D")){
 				ui.menu(4);
+				//printGraph(graph);
 				shortestPath();
 			}
-			else if(input[0].equalsIgnoreCase("R")){
+			else if(input[0].equalsIgnoreCase("I")){
+				ui.menu(5);
+				insertRoad();
 				
 			}
 			else if(input[0].equalsIgnoreCase("R")){
@@ -53,13 +56,13 @@ public class Engine {
 				ui.menu(1);
 			}
 			else if(input[0].equalsIgnoreCase("E")){
-				
+				System.exit(0);
 			}
 			else
-				ui.error();
+				ui.error(1);
 		}
 		else
-			System.out.println("Only one comand");
+			ui.error(2);
 		
 		
 		}
@@ -73,6 +76,7 @@ public class Engine {
 		scanCity();
 		scanRoad();
 		createGraph(getRoadNodes());
+		//printGraph(graph);
 		run();
 		
 	
@@ -155,7 +159,7 @@ public class Engine {
 		
 		String[] searchCityCodes = ui.getInput();
 		
-		if(searchCityCodes.length == 2) {
+		if(searchCityCodes != null && searchCityCodes.length == 2 ) {
 			
 			City from = cityExist(searchCityCodes[0]);
 			City to = cityExist(searchCityCodes[1]);
@@ -163,18 +167,21 @@ public class Engine {
 			if(from != null && to != null) {
 				
 				dijkstra = new Dijkstra(getCityNodes(), graph, from.getCityNumber(), to.getCityNumber());
-				System.out.println(dijkstra.dikstra()[to.getCityNumber()]);
 				
-				printArrayList(dijkstra.getPath());
+				
+				ui.printShortestPath(from.getCityName(), to.getCityName(), dijkstra.dikstra()[to.getCityNumber()], dijkstra.getPath());
 			}
-			else 
-				ui.error();
-			
+			else { 
+				if(from == null)
+					ui.error(5);
+				if(to == null)
+					ui.error(6);
+			}
 			
 			
 		}
 		else
-			System.out.println("Only 1 command");
+			ui.error(3);
 		
 	}
 	
@@ -188,29 +195,20 @@ public class Engine {
 				System.out.print( ", " + path.get(i).getCityName());
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void query(){
 		
 		String[] searchCityCode = ui.getInput();
 		
 		
-		if(searchCityCode.length == 1) {
+		if(searchCityCode != null && searchCityCode.length == 1) {
 		City searchingCity = cityExist(searchCityCode[0]);
 		if(searchingCity != null)
 			System.out.println(searchingCity);
 		else
-			ui.error();
+			ui.error(4);
 		}
 		else
-			System.out.println("Only one command");
+			ui.error(3);
 	}
 	
 	public City cityExist(String searchCityCode){
@@ -226,6 +224,103 @@ public class Engine {
 		
 		
 		return searchCity;
+	}
+	
+	
+	public void insertRoad(){
+		
+		String[] roadAdded = ui.getInput();
+		
+		
+		
+		
+		if(roadAdded != null && roadAdded.length == 3) {
+			
+			City from = cityExist(roadAdded[0]);
+			City to = cityExist(roadAdded[1]);
+			int distance = Integer.MIN_VALUE;
+			
+			try {
+				distance = Integer.parseInt(roadAdded[2]);
+			} catch (NumberFormatException e) {
+				ui.error(7);
+			}
+			
+			if(from != null && to != null && distance != Integer.MIN_VALUE && distance > 0) {
+				
+				
+				
+				if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) {
+					graph.addEdge(from.getCityNumber(), to.getCityNumber(), distance);
+					ui.printGraphManipulation(from.getCityName(), to.getCityName(), distance, 1);
+				}
+				else 
+					ui.error(1,from.getCityName(),to.getCityName());
+			
+			}
+			else {
+				if(from == null)
+					ui.error(5);
+				if(to == null)
+					ui.error(6);
+				if(distance < 0 && distance != Integer.MIN_VALUE)
+					ui.error(8);
+			}
+			
+			
+		}
+		
+		else 
+			ui.error(3);
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	public void removeRoad() {
+		
+		String[] roadAdded = ui.getInput();
+		
+		
+		
+		
+		if(roadAdded != null && roadAdded.length == 2) {
+			
+			City from = cityExist(roadAdded[0]);
+			City to = cityExist(roadAdded[1]);
+			
+			
+			if(from != null && to != null) {
+				
+				
+				
+				if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) {
+					graph.removeEdge(from.getCityNumber(), to.getCityNumber());
+					ui.printGraphManipulation(from.getCityName(), to.getCityName(), 0, 2);
+				}
+				else 
+					ui.error(1,from.getCityName(),to.getCityName());
+			
+			}
+			else {
+				if(from == null)
+					ui.error(5);
+				if(to == null)
+					ui.error(6);
+				
+			}
+			
+			
+		}
+		
+		else 
+			ui.error(3);
+		
+		
 	}
 	
 	
