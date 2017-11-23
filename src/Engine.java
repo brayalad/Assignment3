@@ -49,8 +49,8 @@ public class Engine {
 				
 			}
 			else if(input[0].equalsIgnoreCase("R")){
-
-
+				ui.menu(4);
+				removeRoad();
 			}
 			else if(input[0].equalsIgnoreCase("H")){
 				ui.menu(1);
@@ -298,7 +298,7 @@ public class Engine {
 				
 				
 				
-				if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) {
+				if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) != 0) {
 					graph.removeEdge(from.getCityNumber(), to.getCityNumber());
 					ui.printGraphManipulation(from.getCityName(), to.getCityName(), 0, 2);
 				}
