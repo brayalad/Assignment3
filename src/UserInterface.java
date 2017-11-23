@@ -53,9 +53,9 @@ public class UserInterface {
 		
 		switch(operation) {
 		
-		case 1: System.out.println("You have inserted a road from " + from + " to " + to + " with a distance of " + distance + ".");
+		case 1: System.out.println("You have inserted a road from " + from + " to " + to + " with a distance of " + distance + ".\n");
 				break;
-		case 2: System.out.println("You have deleted the road from " + from + " to " + to + ".");
+		case 2: System.out.println("You have deleted the road from " + from + " to " + to + ".\n");
 				break;
 		
 		}
@@ -74,7 +74,7 @@ public class UserInterface {
 			else
 				System.out.print( ", " + path.get(i).getCityCode());
 	
-		System.out.println();
+		System.out.println("\n");
 	}
 	public String [] getInput() {
 		
@@ -82,7 +82,7 @@ public class UserInterface {
 		
 		String [] arrayOfString = text.nextLine().split(" ");
 		
-		int possibleNegativeNumber = Integer.MIN_VALUE;
+		
 		
 		
 		
@@ -99,16 +99,7 @@ public class UserInterface {
 					
 					if(j != 2 && !matcher.matches())
 						correct = false;
-					//else {
-						//try {
-							//possibleNegativeNumber = Integer.parseInt(arrayOfString[2]);
-					//	} catch (NumberFormatException e) {
-							
-							//if(!matcher.matches())
-								//correct = false;
-							
-						//}
-					//}
+					
 				}
 			}
 				
@@ -122,12 +113,10 @@ public class UserInterface {
 	
 	
 	
-	public int getPossibleNegativeNumber(int possibleNegativeNumber) {
-		return possibleNegativeNumber;
-	}
+	
 	
 	public void printCity(City city) {
-		System.out.println(city);
+		System.out.println(city + "\n");
 	}
 	
 	public void error(int operation){
@@ -152,7 +141,7 @@ public class UserInterface {
 				break;
 		case 8: System.out.println("Error: Distance error can not be negative");
 				break;
-		case 9: System.out.println("Please try again");
+		case 9: System.out.println("Please try again\n");
 				break;
 		case 10:System.out.println("Error: Input can not be a number");
 				break;
@@ -172,7 +161,7 @@ switch(operation) {
 		case 2: System.out.println("Error: The road from " + from + " to " + to + " doesn't exist.");
 				break;
 		
-		case 3: System.out.println("Please try again");
+		case 3: System.out.println("Please try again\n");
 				break;
 		}
 		
