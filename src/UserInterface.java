@@ -6,13 +6,11 @@ import java.util.regex.Pattern;
 
 public class UserInterface {
 
-	private Scanner input;
 	private Scanner text;
 	private Pattern pattern;
 	private Matcher matcher;
 	
 	public UserInterface() {
-		input = new Scanner(System.in);
 		text = new Scanner(System.in);
 		pattern = Pattern.compile("[a-zA-Z0-9]*");
 	}
@@ -28,26 +26,18 @@ public class UserInterface {
 									+ "H Display this message.\n"
 									+ "E Exit.");
 				break;
-				
 		case 2: System.out.print("Command?: ");
 				break;
-				
 		case 3: System.out.print("City Code: ");
 				break;
-				
 		case 4: System.out.print("City Codes: ");
 				break;
-				
 		case 5: System.out.print("City Codes and distance: ");
 				break;
 
 		}
-	
 		
 	}
-	
-	
-	
 	
 	public void printGraphManipulation(String from, String to, int distance, int operation) {
 		
@@ -59,9 +49,7 @@ public class UserInterface {
 				break;
 		
 		}
-		
-		
-		
+	
 	}
 	
 	public void printShortestPath(String from, String to, int distance, ArrayList<City> path) {
@@ -76,16 +64,12 @@ public class UserInterface {
 	
 		System.out.println("\n");
 	}
+	
 	public String [] getInput() {
 		
 		String [] correctArrayOfString = null;
 		
 		String [] arrayOfString = text.nextLine().split(" ");
-		
-		
-		
-		
-		
 		
 		boolean correct = true;
 		
@@ -96,13 +80,10 @@ public class UserInterface {
 				for(int j = 0; j < arrayOfString.length; j++) {
 					matcher = pattern.matcher(arrayOfString[j]);
 					
-					
 					if(j != 2 && !matcher.matches())
 						correct = false;
-					
 				}
-			}
-				
+			}	
 		}
 		
 		if(correct)
@@ -153,17 +134,15 @@ public class UserInterface {
 	
 	public void error(int operation, String from, String to) {
 		
-switch(operation) {
+		switch(operation) {
 		
-		case 1: System.out.println("Error: The road from " + from + " to " + to + " already exist.");
-
-				break;
-		case 2: System.out.println("Error: The road from " + from + " to " + to + " doesn't exist.");
-				break;
-		
-		case 3: System.out.println("Please try again\n");
-				break;
-		}
+			case 1: System.out.println("Error: The road from " + from + " to " + to + " already exist.");
+					break;
+			case 2: System.out.println("Error: The road from " + from + " to " + to + " doesn't exist.");
+					break;
+			case 3: System.out.println("Please try again\n");
+					break;
+			}
 		
 	}
 	

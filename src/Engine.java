@@ -5,9 +5,6 @@ import java.util.Scanner;
 public class Engine {
 
 	private UserInterface ui;
-	private Scanner readTextInfo;
-	private PriorityQueue queue;
-	private Scanner input = new Scanner(System.in);
 	private Scanner readFile;
 	private Digraph graph;
 	private ArrayList<City> cityNodeList;
@@ -24,7 +21,18 @@ public class Engine {
 		roadNodeList = new ArrayList<>();
 	}
 	
-	public void run(){
+	public void start() throws IOException{
+		
+		scanCity();
+		scanRoad();
+		createGraph(getRoadNodes());
+		run();
+		
+	}
+	
+	
+	
+	private void run(){
 		
 		
 		boolean run = true;
@@ -91,73 +99,61 @@ public class Engine {
 		
 		
 	
-	public void start() throws IOException{
-		
-		scanCity();
-		scanRoad();
-		createGraph(getRoadNodes());
-		
-		run();
-		
 	
 	
-		
-		
-	}
-	
-	public void test(City[] cityNodes) {
+	private void test(City[] cityNodes) {
 		
 		for(int i = 1; i < cityNodes.length; i++)
 			System.out.print(cityNodes[i].getCityNumber() + " ");
 		System.out.println();
 	}
-	public void test(Road[] roadNodes) {
+	private void test(Road[] roadNodes) {
 	
 		for(int i = 0; i < roadNodes.length; i++)
 			System.out.println(roadNodes[i]);
 		
 	}
 	
-	public void printArray(int[] distance) {
+	private void printArray(int[] distance) {
 		for(int i = 1; i < distance.length; i++)
 			System.out.print(distance[i] + " ");
 	}
 	
 	
-	public String []getData(){
+	private String []getData(){
 		String[] stringData = new String[5];
 		
 		return stringData;
 	}
 	
-	public void createGraph(Road[] roadNodes) throws FileNotFoundException {
+	private void createGraph(Road[] roadNodes) throws FileNotFoundException {
 		scanCity();
 		graph = new Digraph(getCityNodes().length, getCityNodes());
 		
 		
 		for(int i = 1; i < roadNodes.length; i++) {
 			
-			graph.addEdge(roadNodes[i].from.getCityNumber(), roadNodes[i].to.getCityNumber(), roadNodes[i].getWeight());
+			graph.addEdge(roadNodes[i].getFrom().getCityNumber(), roadNodes[i].getTo().getCityNumber(), roadNodes[i].getWeight());
 		}
 	}
-	public void printGraph(Digraph graph) {
+	private void printGraph(Digraph graph) {
 		System.out.println("The adjacency matrix for the given graph is: ");
         System.out.print("  ");
-        for (int i = 1; i <= graph.vertices; i++)
+        for (int i = 1; i <= graph.getVertices(); i++)
             System.out.print(i + " ");
         System.out.println();
 
-        for (int i = 1; i <= graph.vertices; i++) 
+        for (int i = 1; i <= graph.getVertices(); i++) 
         {
             System.out.print(i + " ");
-            for (int j = 1; j <= graph.vertices; j++) 
+            for (int j = 1; j <= graph.getVertices(); j++) 
                 System.out.print(graph.getEdge(i, j) + " ");
             System.out.println();
         }
         System.out.println();
     }
 	
-	public void printHeap(int[] heap, int lastIndex){
+	private void printHeap(int[] heap, int lastIndex){
 		
 		
 		
@@ -170,7 +166,7 @@ public class Engine {
 	}
 	
 	
-	public void shortestPath() {
+	private void shortestPath() {
 		
 		int integerTest = -1;
 		String[] searchCityCodes = null; 
@@ -217,7 +213,7 @@ public class Engine {
 	}
 	
 	
-	public void printArrayList(ArrayList<City> path) {
+	private void printArrayList(ArrayList<City> path) {
 		
 		for(int i = 0; i < path.size(); i ++)
 			if(i == 0)
@@ -226,7 +222,7 @@ public class Engine {
 				System.out.print( ", " + path.get(i).getCityName());
 	}
 	
-	public void query(){
+	private void query(){
 		
 		
 		String[] searchCityCode = null;
@@ -267,7 +263,7 @@ public class Engine {
 		
 	
 	}
-	public City cityExist(String searchCityCode){
+	private City cityExist(String searchCityCode){
 		
 		City[] cities = getCityNodes();
 		City searchCity = null;
@@ -283,15 +279,12 @@ public class Engine {
 	}
 	
 	
-	public void insertRoad(){
+	private void insertRoad(){
 		
 		@SuppressWarnings("unused")
 		int integerTest = -1;
 		
 		String[] roadAdded = null;
-		
-		
-			
 		
 		roadAdded = ui.getInput();
 			
@@ -347,14 +340,9 @@ public class Engine {
 				ui.error(9);
 			}
 		
-		
-		
-		
-		
-		
 	}
 	
-	public void removeRoad() {
+	private void removeRoad() {
 		
 		int integerTest = -1;
 		String[] roadAdded = null; 
@@ -408,14 +396,7 @@ public class Engine {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	public City[] getCityNodes() {
+	private City[] getCityNodes() {
 		City[] cityNodes = new City[cityNodeList.size()+1];
 		
 		for(int i = 1; i < cityNodes.length; i++)
@@ -424,7 +405,7 @@ public class Engine {
 		return cityNodes;
 		
 	}
-	public Road[] getRoadNodes() {
+	private Road[] getRoadNodes() {
 		Road[] roadNodes = new Road[roadNodeList.size()+1];
 		
 		for(int i = 1; i < roadNodes.length; i++)
@@ -436,12 +417,7 @@ public class Engine {
 	
 	
 	
-	
-	
-	
-	
-	
-	public void scanCity() throws FileNotFoundException {
+	private void scanCity() throws FileNotFoundException {
 		try {
 			readFile = new Scanner(new File("city(2).dat"));
 		} catch (FileNotFoundException e) {
@@ -455,14 +431,13 @@ public class Engine {
 			int cityNumber = Integer.parseInt(readFile.next()); 
 			String cityCode = readFile.next();
 			String fullCityName = null;
-			//if(cityNumber.equals("4|5|6|7|11|12|13|14|16|17")) {
+			
 			if(cityNumber == 4 || cityNumber == 5 || cityNumber == 6 || 
 			   cityNumber == 7 || cityNumber == 9 || cityNumber == 11|| 
 			   cityNumber == 12|| cityNumber == 13|| cityNumber == 14|| 
 			   cityNumber == 16|| cityNumber == 17) {
 				fullCityName = readFile.next() + " " + readFile.next();
-			}
-			else
+			}else
 				fullCityName = readFile.next();
 			
 			
@@ -474,7 +449,7 @@ public class Engine {
 		
 	}
 	
-	public void scanRoad() {
+	private void scanRoad() {
 		try {
 			readFile = new Scanner(new File("road(2).dat"));
 		} catch (FileNotFoundException e) {
@@ -486,11 +461,9 @@ public class Engine {
 			int from = Integer.parseInt(readFile.next());
 			int to = Integer.parseInt(readFile.next());
 			int distance = Integer.parseInt(readFile.next());
-		
-		
-		roadNodeList.add(new Road(getCityNodes()[from], getCityNodes()[to], distance));
+	
+			roadNodeList.add(new Road(getCityNodes()[from], getCityNodes()[to], distance));
 		}
 	}
-	
-	
+		
 }

@@ -1,9 +1,9 @@
 
 public class Road {
 
-	City from;
-	City to;
-	int weight;
+	private City from;
+	private City to;
+	private int weight;
 	
 	public Road(City from, City to, int weight) {
 		

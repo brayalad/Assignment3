@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 
 public class City {
 	
@@ -7,7 +7,7 @@ public class City {
 	private String fullCityName;
 	private int population;
 	private int elevation;
-	private ArrayList<Road> neighbors;
+	
 	
 	public City(int cityNumber, String cityCode, String fullCityName, int population, int elevation) {
 		
@@ -16,19 +16,7 @@ public class City {
 		this.fullCityName = fullCityName;
 		this.population = population;
 		this.elevation = elevation;
-		neighbors = new ArrayList<>();
-	}
-	
-	public void addNeighbor(Road road) {
-		neighbors.add(road);
-	}
-	
-	public Road getNeigbor(int index) {
-		return neighbors.get(index);
-	}
-	
-	public void removeNeighbor(int index) {
-		neighbors.remove(index);
+		
 	}
 	
 	public int getCityNumber() {
@@ -40,9 +28,7 @@ public class City {
 	public String getCityName() {
 		return fullCityName;
 	}
-	public ArrayList<Road> getNeighbors(){
-		return neighbors;
-	}
+	
 	
 	
 	public String toString() {

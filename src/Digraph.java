@@ -1,32 +1,15 @@
-import java.util.ArrayList;
+
 public class Digraph {
 
-	 int vertices;
-	 int[][] graphMatrix;
-	 City[] cityNodes;
-	 Road[] roadNodes;
-	 int[] distance;
-	 int[] previous;
-	 ArrayList<Integer> visited;
-	 PriorityQueue queue;
+	 private int vertices;
+	 private int[][] graphMatrix;
 	 
-	
-	public Digraph(int vertices, City[] cityNodes) {
+	 public Digraph(int vertices, City[] cityNodes) {
 		this.vertices = vertices;
 		graphMatrix = new int[vertices + 1][vertices + 1];
-		distance = new int[vertices];
-		previous = new int[vertices];
-		visited = new ArrayList<>();
-		this.cityNodes = cityNodes;
+		
 	}
-	public Digraph(int vertices, City[] cityNodes, int[][] test) {
-		this.vertices = vertices;
-		graphMatrix = test;
-		distance = new int[vertices];
-		previous = new int[vertices];
-		visited = new ArrayList<>();
-		this.cityNodes = cityNodes;
-	}
+	
 	
 	public void addEdge(int from, int to, int edge) {
 		
@@ -50,6 +33,9 @@ public class Digraph {
 		return graphMatrix;
 	}
 	
+	public int getVertices(){
+		return vertices;
+	}
 	
 	
 }
