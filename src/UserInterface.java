@@ -126,6 +126,10 @@ public class UserInterface {
 		return possibleNegativeNumber;
 	}
 	
+	public void printCity(City city) {
+		System.out.println(city);
+	}
+	
 	public void error(int operation){
 		
 		switch(operation) {
@@ -137,7 +141,7 @@ public class UserInterface {
 				break;
 		case 3: System.out.println("Error: Wrong amount of inputs were entered for this command");
 				break;
-		case 4: System.out.println("Error: City you have entered does not Exist");
+		case 4: System.out.println("Error: City you have entered does not exist");
 				break;
 		case 5: System.out.println("Error: The departure city you inputed does not exist");
 				break;

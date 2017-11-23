@@ -40,7 +40,7 @@ public class Engine {
 			}
 			else if(input[0].equalsIgnoreCase("D")){
 				ui.menu(4);
-				//printGraph(graph);
+				
 				shortestPath();
 			}
 			else if(input[0].equalsIgnoreCase("I")){
@@ -76,15 +76,11 @@ public class Engine {
 		scanCity();
 		scanRoad();
 		createGraph(getRoadNodes());
-		//printGraph(graph);
+		
 		run();
 		
 	
-		//printGraph(graph);
-		//test(getCityNodes());
-		//Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 3);
-		//printArray(dijkstra.dikstra());
-		
+	
 		
 		
 	}
@@ -143,8 +139,7 @@ public class Engine {
 	
 	public void printHeap(int[] heap, int lastIndex){
 		
-		//for (int i = 0; i < (lastIndex + 1); i++)
-			//System.out.print(heap[i] + " ");
+		
 		
 		for (int i = 0; i < heap.length;i++ ){
 				if(heap[i] != 0)
@@ -203,7 +198,7 @@ public class Engine {
 		if(searchCityCode != null && searchCityCode.length == 1) {
 		City searchingCity = cityExist(searchCityCode[0]);
 		if(searchingCity != null)
-			System.out.println(searchingCity);
+			ui.printCity(searchingCity);
 		else
 			ui.error(4);
 		}
