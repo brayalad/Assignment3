@@ -30,41 +30,59 @@ public class Engine {
 		ui.menu(2);
 		boolean run = true;
 		while(run) {
-		String[] input = ui.getInput();
-		
-		if(input.length == 1){
 			
-			if(input[0].equalsIgnoreCase("Q")){
-				ui.menu(3);
-				query();
-			}
-			else if(input[0].equalsIgnoreCase("D")){
-				ui.menu(4);
+			@SuppressWarnings("unused")
+			int integerTest = 0;
+			String[] input = ui.getInput();
+			
+			if(input != null) {
 				
-				shortestPath();
-			}
-			else if(input[0].equalsIgnoreCase("I")){
-				ui.menu(5);
-				insertRoad();
+				try {
+					integerTest = Integer.parseInt(input[0]);
+					ui.error(10);
+					ui.error(9);
+					
+				} catch (NumberFormatException e) {
+					if(input.length == 1){
+						
+						if(input[0].equalsIgnoreCase("Q")){
+							query();
+						}
+						else if(input[0].equalsIgnoreCase("D")){
+							ui.menu(4);
+							shortestPath();
+						}
+						else if(input[0].equalsIgnoreCase("I")){
+							ui.menu(5);
+							insertRoad();
+						}
+						else if(input[0].equalsIgnoreCase("R")){
+							ui.menu(4);
+							removeRoad();
+						}
+						else if(input[0].equalsIgnoreCase("H")){
+							ui.menu(1);
+						}
+						else if(input[0].equalsIgnoreCase("E")){
+							System.exit(0);
+						}
+						else
+							ui.error(1);
+					}
+					else {
+						ui.error(3);
+						ui.error(9);
+					}
+					
+				}
+		
 				
-			}
-			else if(input[0].equalsIgnoreCase("R")){
-				ui.menu(4);
-				removeRoad();
-			}
-			else if(input[0].equalsIgnoreCase("H")){
-				ui.menu(1);
-			}
-			else if(input[0].equalsIgnoreCase("E")){
-				System.exit(0);
-			}
-			else
-				ui.error(1);
-		}
-		else
-			ui.error(2);
 		
-		
+			}
+			else {
+				ui.error(2);
+				ui.error(9);
+			}
 		}
 	}
 	
@@ -192,20 +210,45 @@ public class Engine {
 	
 	public void query(){
 		
-		String[] searchCityCode = ui.getInput();
+		boolean correctInput = false;
+		String[] searchCityCode = null;
 		
-		
-		if(searchCityCode != null && searchCityCode.length == 1) {
-		City searchingCity = cityExist(searchCityCode[0]);
-		if(searchingCity != null)
-			ui.printCity(searchingCity);
-		else
-			ui.error(4);
+		while(!correctInput) {
+			@SuppressWarnings("unused")
+			int integerTest = -1;
+			ui.menu(3);
+			searchCityCode = ui.getInput();
+			
+			if(searchCityCode != null) {
+				try {
+					integerTest = Integer.parseInt(searchCityCode[0]);
+					ui.error(10);
+					ui.error(9);
+				} catch (NumberFormatException e) {
+					if(searchCityCode.length == 1) {
+						City searchingCity = cityExist(searchCityCode[0]);
+						if(searchingCity != null) {
+							ui.printCity(searchingCity);
+							correctInput = true;
+						}
+						else {
+							ui.error(4);
+							ui.error(9);
+						}	
+					}
+					else {
+						ui.error(3);
+						ui.error(9);
+					}
+				}
+			}
+			else {
+				ui.error(11);
+				ui.error(9);
+			}
 		}
-		else
-			ui.error(3);
-	}
 	
+	}
 	public City cityExist(String searchCityCode){
 		
 		City[] cities = getCityNodes();
@@ -224,52 +267,67 @@ public class Engine {
 	
 	public void insertRoad(){
 		
-		String[] roadAdded = ui.getInput();
+		int integerTest = -1;
+		boolean correctInput = false;
+		String[] roadAdded = null;
 		
-		
-		
-		
-		if(roadAdded != null && roadAdded.length == 3) {
+		while(!correctInput) {
 			
-			City from = cityExist(roadAdded[0]);
-			City to = cityExist(roadAdded[1]);
-			int distance = Integer.MIN_VALUE;
+		
+			roadAdded = ui.getInput();
 			
-			try {
-				distance = Integer.parseInt(roadAdded[2]);
-			} catch (NumberFormatException e) {
-				ui.error(7);
-			}
+			if(roadAdded != null) {
 			
-			if(from != null && to != null && distance != Integer.MIN_VALUE && distance > 0) {
+				try {
+					integerTest = Integer.parseInt(roadAdded[0]);
+					integerTest = Integer.parseInt(roadAdded[1]);
+					ui.error(10);
+					ui.error(9);
+				} catch (NumberFormatException e1) {
+					
+					if(roadAdded.length == 3) {
+			
+						City from = cityExist(roadAdded[0]);
+						City to = cityExist(roadAdded[1]);
+						int distance = Integer.MIN_VALUE;
+			
+						try {
+							distance = Integer.parseInt(roadAdded[2]);
+						} catch (NumberFormatException e) {
+							ui.error(7);
+						}
+					
+						if(from != null && to != null && distance != Integer.MIN_VALUE && distance > 0) {
 				
 				
 				
-				if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) {
-					graph.addEdge(from.getCityNumber(), to.getCityNumber(), distance);
-					ui.printGraphManipulation(from.getCityName(), to.getCityName(), distance, 1);
+							if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) {
+								graph.addEdge(from.getCityNumber(), to.getCityNumber(), distance);
+								ui.printGraphManipulation(from.getCityName(), to.getCityName(), distance, 1);
+							}else 
+								ui.error(1,from.getCityName(),to.getCityName());
+			
+						}else {
+							if(from == null)
+								ui.error(5);
+							if(to == null)
+								ui.error(6);
+							if(distance < 0 && distance != Integer.MIN_VALUE)
+								ui.error(8);
+						}
+			
+			
+					}else { 
+						ui.error(3);
+						ui.error(9);
+					}
 				}
-				else 
-					ui.error(1,from.getCityName(),to.getCityName());
-			
+			}else {
+				ui.error(2);
+				ui.error(9);
 			}
-			else {
-				if(from == null)
-					ui.error(5);
-				if(to == null)
-					ui.error(6);
-				if(distance < 0 && distance != Integer.MIN_VALUE)
-					ui.error(8);
-			}
-			
-			
+		
 		}
-		
-		else 
-			ui.error(3);
-		
-		
-		
 		
 		
 		

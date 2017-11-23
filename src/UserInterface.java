@@ -135,9 +135,10 @@ public class UserInterface {
 		switch(operation) {
 		
 		case 1: System.out.println("Error: Invalid input. Please enter a command from the menu.\n"
-									+ "       To see the menu, press H");
+									+ "To see the menu, press H");
 				break;
-		case 2: System.out.println("Error: Spaces must be used to seperate inputs");
+		case 2: System.out.println("Error: Spaces must be used to seperate inputs.\n"
+								   + "       Inputs can not contain any special characters");
 				break;
 		case 3: System.out.println("Error: Wrong amount of inputs were entered for this command");
 				break;
@@ -151,7 +152,11 @@ public class UserInterface {
 				break;
 		case 8: System.out.println("Error: Distance error can not be negative");
 				break;
-		case 9: System.out.println("       Please try again");
+		case 9: System.out.println("Please try again");
+				break;
+		case 10:System.out.println("Error: Input can not be a number");
+				break;
+		case 11: System.out.println("Error: Input can not have any special characters");
 				break;
 		}
 			
@@ -167,7 +172,7 @@ switch(operation) {
 		case 2: System.out.println("Error: The road from " + from + " to " + to + " doesn't exist.");
 				break;
 		
-		case 3: System.out.println("       Please try again");
+		case 3: System.out.println("Please try again");
 				break;
 		}
 		
