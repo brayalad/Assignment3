@@ -34,14 +34,19 @@ public class City {
 	public int getCityNumber() {
 		return cityNumber;
 	}
-	
+	public String getCityCode() {
+		return cityCode;
+	}
+	public String getCityName() {
+		return fullCityName;
+	}
 	public ArrayList<Road> getNeighbors(){
 		return neighbors;
 	}
 	
 	
 	public String toString() {
-		return " " + cityNumber + " " + cityCode + " " + fullCityName + " " + population + " " + elevation;
+		return "" + cityNumber + " " + cityCode + " " + fullCityName + " " + population + " " + elevation;
 	}
 	
 }

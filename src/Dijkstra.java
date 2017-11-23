@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 public class Dijkstra {
 
 	Digraph graph;
@@ -9,15 +9,19 @@ public class Dijkstra {
 	PriorityQueue availableVertices;
 	City[] cityNodes;
 	int[] visted;
+	int destination;
+	ArrayList<City> path;
 	
-	public Dijkstra(City[] cityNodes, Digraph graph, int source) {
+	public Dijkstra(City[] cityNodes, Digraph graph, int source, int destination) {
 		this.source = source;
 		graphMatrix = graph.getGraphMatrix();
 		distance = new int[graph.getGraphMatrix().length];
 		availableVertices = new PriorityQueue(graph.getGraphMatrix().length);
 		predececor = new int[graph.getGraphMatrix().length];
 		this.cityNodes = cityNodes;
-		//System.out.println(graph.getGraphMatrix().length);
+		this.destination = destination;
+		path = new ArrayList<>();
+		
 	}
 	
 	public int[] dikstra() {
@@ -72,11 +76,31 @@ public class Dijkstra {
 			
 		}
 		
-		printArray();
+		
 		return distance;
 		
 		
 	}
+	
+	public ArrayList<City> getPath(){
+		
+		ArrayList<City> backwardPath = new ArrayList<>();
+		int previous = predececor[destination];
+		backwardPath.add(cityNodes[destination]);
+		while(previous != source) {
+			backwardPath.add(cityNodes[previous]);
+			previous = predececor[previous];
+			
+		}
+		backwardPath.add(cityNodes[source]);
+		
+		for(int i = backwardPath.size() - 1; i >= 0; i--)
+			path.add(backwardPath.get(i));
+		
+		
+		return path;
+	}
+	
 	
 	public void printArray(QueueNode[] heap,int lastIndex) {
 		for(int i = 1; i <= lastIndex; i++ )
@@ -86,6 +110,11 @@ public class Dijkstra {
 		public void printArray() {
 			for(int i = 1; i < predececor.length; i++)
 			System.out.print(predececor[i] + " ");
+			System.out.println();
+		}
+		public void printArrayCity() {
+			for(int i = 1; i < cityNodes.length; i++)
+			System.out.print(cityNodes[i] + " ");
 			System.out.println();
 		}
 }

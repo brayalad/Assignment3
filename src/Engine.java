@@ -12,7 +12,7 @@ public class Engine {
 	private Digraph graph;
 	private ArrayList<City> cityNodeList;
 	private ArrayList<Road> roadNodeList;
-	Digraph testGraph;
+	private Dijkstra dijkstra;
 	
 	
 	
@@ -26,27 +26,33 @@ public class Engine {
 	
 	public void run(){
 		
+		ui.menu(1);
+		ui.menu(2);
+		boolean run = true;
+		while(run) {
 		String[] input = ui.getInput();
 		
 		if(input.length == 1){
 			
-			if(input[0].equals("Q") || input[0].equals("q")){
+			if(input[0].equalsIgnoreCase("Q")){
+				ui.menu(3);
+				query();
+			}
+			else if(input[0].equalsIgnoreCase("D")){
+				ui.menu(4);
+				shortestPath();
+			}
+			else if(input[0].equalsIgnoreCase("R")){
 				
 			}
-			else if(input[0].equals("D") || input[0].equals("d")){
-				
-			}
-			else if(input[0].equals("I") || input[0].equals("i")){
-				
-			}
-			else if(input[0].equals("R") || input[0].equals("H")){
+			else if(input[0].equalsIgnoreCase("R")){
 
 
 			}
-			else if(input[0].equals("H") || input[0].equals("h")){
-				
+			else if(input[0].equalsIgnoreCase("H")){
+				ui.menu(1);
 			}
-			else if(input[0].equals("E") || input[0].equals("e")){
+			else if(input[0].equalsIgnoreCase("E")){
 				
 			}
 			else
@@ -56,7 +62,7 @@ public class Engine {
 			System.out.println("Only one comand");
 		
 		
-		
+		}
 	}
 	
 		
@@ -65,15 +71,15 @@ public class Engine {
 	public void start() throws IOException{
 		
 		scanCity();
-	
 		scanRoad();
-	
 		createGraph(getRoadNodes());
+		run();
+		
 	
-		printGraph(graph);
-		test(getCityNodes());
-		Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 3);
-		printArray(dijkstra.dikstra());
+		//printGraph(graph);
+		//test(getCityNodes());
+		//Dijkstra dijkstra = new Dijkstra(getCityNodes(), graph, 3);
+		//printArray(dijkstra.dikstra());
 		
 		
 		
@@ -107,10 +113,10 @@ public class Engine {
 	public void createGraph(Road[] roadNodes) throws FileNotFoundException {
 		scanCity();
 		graph = new Digraph(getCityNodes().length, getCityNodes());
-		//scanRoad();
+		
 		
 		for(int i = 1; i < roadNodes.length; i++) {
-			//System.out.print(roadNodes[i] + " ");
+			
 			graph.addEdge(roadNodes[i].from.getCityNumber(), roadNodes[i].to.getCityNumber(), roadNodes[i].getWeight());
 		}
 	}
@@ -145,23 +151,81 @@ public class Engine {
 	}
 	
 	
-	public void Query(){
+	public void shortestPath() {
 		
-		String[] searchCityCode = ui.getInput();
+		String[] searchCityCodes = ui.getInput();
+		
+		if(searchCityCodes.length == 2) {
+			
+			City from = cityExist(searchCityCodes[0]);
+			City to = cityExist(searchCityCodes[1]);
+			
+			if(from != null && to != null) {
+				
+				dijkstra = new Dijkstra(getCityNodes(), graph, from.getCityNumber(), to.getCityNumber());
+				System.out.println(dijkstra.dikstra()[to.getCityNumber()]);
+				
+				printArrayList(dijkstra.getPath());
+			}
+			else 
+				ui.error();
+			
+			
+			
+		}
+		else
+			System.out.println("Only 1 command");
 		
 	}
 	
-	public boolean cityExist(String searchCityCode){
+	
+	public void printArrayList(ArrayList<City> path) {
+		
+		for(int i = 0; i < path.size(); i ++)
+			if(i == 0)
+				System.out.print(path.get(i).getCityName());
+			else
+				System.out.print( ", " + path.get(i).getCityName());
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void query(){
+		
+		String[] searchCityCode = ui.getInput();
+		
+		
+		if(searchCityCode.length == 1) {
+		City searchingCity = cityExist(searchCityCode[0]);
+		if(searchingCity != null)
+			System.out.println(searchingCity);
+		else
+			ui.error();
+		}
+		else
+			System.out.println("Only one command");
+	}
+	
+	public City cityExist(String searchCityCode){
 		
 		City[] cities = getCityNodes();
+		City searchCity = null;
 		
-		for(int i = 1; i < cities.length; i++){
-			
-		}
+		for(int i = 1; i < cities.length; i++)
+			if(cities[i].getCityCode().equalsIgnoreCase(searchCityCode))
+				searchCity = cities[i];
 		
 		
 		
-		return false;
+		
+		return searchCity;
 	}
 	
 	

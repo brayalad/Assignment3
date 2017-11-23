@@ -25,7 +25,7 @@ public class UserInterface {
 									+ "I Insert a road by entering two city codes and distance.\n"
 									+ "R Remove an existing road by entering two city codes.\n"
 									+ "H Display this message.\n"
-									+ "E Exit.\n");
+									+ "E Exit.");
 				break;
 				
 		case 2: System.out.print("Command?: ");
