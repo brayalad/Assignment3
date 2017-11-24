@@ -101,31 +101,6 @@ public class Engine {
 	
 	
 	
-	private void test(City[] cityNodes) {
-		
-		for(int i = 1; i < cityNodes.length; i++)
-			System.out.print(cityNodes[i].getCityNumber() + " ");
-		System.out.println();
-	}
-	private void test(Road[] roadNodes) {
-	
-		for(int i = 0; i < roadNodes.length; i++)
-			System.out.println(roadNodes[i]);
-		
-	}
-	
-	private void printArray(int[] distance) {
-		for(int i = 1; i < distance.length; i++)
-			System.out.print(distance[i] + " ");
-	}
-	
-	
-	private String []getData(){
-		String[] stringData = new String[5];
-		
-		return stringData;
-	}
-	
 	private void createGraph(Road[] roadNodes) throws FileNotFoundException {
 		scanCity();
 		graph = new Digraph(getCityNodes().length, getCityNodes());
@@ -136,38 +111,10 @@ public class Engine {
 			graph.addEdge(roadNodes[i].getFrom().getCityNumber(), roadNodes[i].getTo().getCityNumber(), roadNodes[i].getWeight());
 		}
 	}
-	private void printGraph(Digraph graph) {
-		System.out.println("The adjacency matrix for the given graph is: ");
-        System.out.print("  ");
-        for (int i = 1; i <= graph.getVertices(); i++)
-            System.out.print(i + " ");
-        System.out.println();
-
-        for (int i = 1; i <= graph.getVertices(); i++) 
-        {
-            System.out.print(i + " ");
-            for (int j = 1; j <= graph.getVertices(); j++) 
-                System.out.print(graph.getEdge(i, j) + " ");
-            System.out.println();
-        }
-        System.out.println();
-    }
-	
-	private void printHeap(int[] heap, int lastIndex){
-		
-		
-		
-		for (int i = 0; i < heap.length;i++ ){
-				if(heap[i] != 0)
-					System.out.print(heap[i] + " ");
-		}
-			
-		
-	}
-	
 	
 	private void shortestPath() {
 		
+		@SuppressWarnings("unused")
 		int integerTest = -1;
 		String[] searchCityCodes = null; 
 				
@@ -212,15 +159,6 @@ public class Engine {
 		}
 	}
 	
-	
-	private void printArrayList(ArrayList<City> path) {
-		
-		for(int i = 0; i < path.size(); i ++)
-			if(i == 0)
-				System.out.print(path.get(i).getCityName());
-			else
-				System.out.print( ", " + path.get(i).getCityName());
-	}
 	
 	private void query(){
 		
@@ -344,6 +282,7 @@ public class Engine {
 	
 	private void removeRoad() {
 		
+		@SuppressWarnings("unused")
 		int integerTest = -1;
 		String[] roadAdded = null; 
 		
