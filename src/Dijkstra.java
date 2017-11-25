@@ -91,7 +91,7 @@ public class Dijkstra {
 			for(int v = 1; v < graphMatrix.length-1; v++) {
 				if(graphMatrix[u][v] != 0) {
 				
-					int alt = distance[u] + graphMatrix[u][v]; //alteernative distance
+					int alt = distance[u] + graphMatrix[u][v]; //Alternative distance
 					
 					/*
 					 * Checks if alternate distance is less then the current distance
@@ -101,6 +101,7 @@ public class Dijkstra {
 						
 						distance[v] = alt;
 						predececor[v] = u;
+						//the remove and add methods below act as a decrease_priorty function that would be found in a priority queue
 						availableVertices.remove(v);
 						availableVertices.add(cityNodes[v], distance[v]);
 					}

@@ -22,7 +22,7 @@ public class UserInterface {
 	 */
 	private Pattern pattern;
 	/**
-	 * Instance of the Pattern class used to check if user input contains any special characters
+	 * Instance of the Matcher class used to check if user input contains any special characters
 	 */
 	private Matcher matcher;
 	
@@ -77,6 +77,12 @@ public class UserInterface {
 		return correctArrayOfString;
 	}
 	
+	/**
+	 * This method is the menu method. It prints out all the commands that the user asks for. It consist of a switch 
+	 * Statement that takes in a operation number. That operation number dictates what command the user has inputed and 
+	 * what information must be displayed out to the user for the program to continue.
+	 * @param operation the number to whichever statement needs to be printed our to the user
+	 */
 	public void menu(int operation){
 		
 		switch(operation){
@@ -96,11 +102,22 @@ public class UserInterface {
 				break;
 		case 5: System.out.print("City Codes and distance: ");
 				break;
+		case 6: System.out.print("Thank your for using my program");
+				break;
 
 		}
 		
 	}
 	
+	/**
+	 * This method prints out information to the user the pertains to the manipulation of the graph. 
+	 * Depending on weather the user added or deleted a(n) edge/road from the graph, the method will
+	 * display the type of change and the cities and/or road that were involved in that change
+	 * @param from
+	 * @param to
+	 * @param distance
+	 * @param operation
+	 */
 	public void printGraphManipulation(String from, String to, int distance, int operation) {
 		
 		switch(operation) {
@@ -114,6 +131,14 @@ public class UserInterface {
 	
 	}
 	
+	/**
+	 * This prints out the shortest path created by the Dijkstra class and its shortest path method which 
+	 * is represented by an array list.
+	 * @param from the departing city
+	 * @param to the destination city
+	 * @param distance the weight of the path
+	 * @param path the array list containing the shortest path
+	 */
 	public void printShortestPath(String from, String to, int distance, ArrayList<City> path) {
 		
 		System.out.println("The minimum distance between " + from + " and " + to + " is " + distance + " through the route:");
@@ -127,10 +152,20 @@ public class UserInterface {
 		System.out.println("\n");
 	}
 	
+	/**
+	 * Prints out the information contained within a city node whenever the user asks for
+	 * a query on the city
+	 * @param city the city being queried
+	 */
 	public void printCity(City city) {
 		System.out.println(city + "\n");
 	}
 	
+	/**
+	 * This method is called on whenever the Engine class finds an error in the users input. 
+	 * A switch statement is used to accommodate multiple possible errors that may occur
+	 * @param operation type of error that was found
+	 */
 	public void error(int operation){
 		
 		switch(operation) {
@@ -163,6 +198,13 @@ public class UserInterface {
 			
 	}
 	
+	/**
+	 * This is another overloaded error method that also displays another type of error that may occur.
+	 * This error only occurs when the edge/road the user wants to input/remove  already exist/doesn't exist
+	 * @param operation the type of error 
+	 * @param from departing city
+	 * @param to destination city
+	 */
 	public void error(int operation, String from, String to) {
 		
 		switch(operation) {
