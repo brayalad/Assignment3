@@ -50,7 +50,7 @@ public class Engine {
 		
 	/**
 	 * This is the Engine class constructor that instantiates the fields of this class with their respective values
-	 * @param ui
+	 * @param ui isntance of the UserInterface class
 	 */
 	public Engine(UserInterface ui){
 		this.ui = ui;
@@ -62,7 +62,7 @@ public class Engine {
 	 * This is the start method that starts the whole program. It is called on by the main method. It then scans 
 	 * the files that contain the cities and the codes, then creates a graph using the data it scanned. It then 
 	 * runs the run method which goes runs the program
-	 * @throws IOException
+	 * @throws IOException This may throw a file not found exception
 	 */
 	public void start() throws IOException{
 		
@@ -81,11 +81,10 @@ public class Engine {
 	 */
 	private void run(){
 		
-		
+		ui.menu(1);
 		boolean run = true;
 		while(run) {
 			
-			ui.menu(1);
 			ui.menu(2);
 			@SuppressWarnings("unused")
 			int integerTest = 0;
@@ -242,9 +241,15 @@ public class Engine {
 					
 					//This if statement checks to see that the cities inputed exist
 					if(from != null && to != null) {
-						dijkstra = new Dijkstra(getCityNodes(), graph, from.getCityNumber(), to.getCityNumber()); //
-						ui.printShortestPath(from.getCityName(), to.getCityName(), dijkstra.dikstra()[to.getCityNumber()], dijkstra.getPath());
-					}else { //Rest of method sends different error messages depending on the error committed
+						//This if statement checks if from and to cities are the same
+						if(from != to && to != from) {
+							dijkstra = new Dijkstra(getCityNodes(), graph, from.getCityNumber(), to.getCityNumber()); 
+							ui.printShortestPath(from.getCityName(), to.getCityName(), dijkstra.dikstra()[to.getCityNumber()], dijkstra.getPath());
+						}else {//Rest of method sends different error messages depending on the error committed
+							ui.error(13);
+							ui.error(9);
+						}
+					}else { 
 						if(from == null)
 						ui.error(5);
 						if(to == null)
@@ -332,11 +337,18 @@ public class Engine {
 						 * exist and also checks to see if the distance is not a negative number
 						 */
 						if(from != null && to != null && distance != Integer.MIN_VALUE && distance > 0) {
-							if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) {
-								graph.addEdge(from.getCityNumber(), to.getCityNumber(), distance);
-								ui.printGraphManipulation(from.getCityName(), to.getCityName(), distance, 1);
-							}else { //Rest of method sends different error messages depending on the error committed
-								ui.error(1,from.getCityName(),to.getCityName());
+							//This if statement checks if from and to cities are the same
+							if(from != to && to != from) {
+								//This if statement checks if a road already exist
+								if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) == 0) { 
+									graph.addEdge(from.getCityNumber(), to.getCityNumber(), distance);
+									ui.printGraphManipulation(from.getCityName(), to.getCityName(), distance, 1);
+								}else { //Rest of method sends different error messages depending on the error committed
+									ui.error(1,from.getCityName(),to.getCityName());
+									ui.error(9);
+								}
+							}else {
+								ui.error(13);
 								ui.error(9);
 							}
 						}else {
@@ -346,6 +358,7 @@ public class Engine {
 								ui.error(6);
 							if(distance < 0 && distance != Integer.MIN_VALUE)
 								ui.error(8);
+							ui.error(9);
 						}
 					}else { 
 						ui.error(3);
@@ -397,14 +410,21 @@ public class Engine {
 					 * exist and also checks to see if the distance is not a negative number
 					 */
 					if(from != null && to != null) {
-						if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) != 0) {
-							graph.removeEdge(from.getCityNumber(), to.getCityNumber());
-							ui.printGraphManipulation(from.getCityName(), to.getCityName(), 0, 2);
+						//This if statement checks if from and to cities are the same
+						if(from != to && to != from) {
+							//This if statement checks if a road exists
+							if(graph.getEdge(from.getCityNumber(), to.getCityNumber()) != 0) {
+								graph.removeEdge(from.getCityNumber(), to.getCityNumber());
+								ui.printGraphManipulation(from.getCityName(), to.getCityName(), 0, 2);
+							}else {//Rest of method sends different error messages depending on the error committed
+								ui.error(1,from.getCityName(),to.getCityName());
+								ui.error(9);
+							}
 						}else {
-							ui.error(1,from.getCityName(),to.getCityName());
+							ui.error(13);
 							ui.error(9);
 						}
-					}else {//Rest of method sends different error messages depending on the error committed
+					}else {
 						if(from == null)
 							ui.error(5);
 						if(to == null)
@@ -457,7 +477,9 @@ public class Engine {
 			readFile = new Scanner(new File("city(2).dat"));
 		} catch (FileNotFoundException e) {
 			
-			e.printStackTrace();
+			ui.error(12);
+			ui.menu(6);
+			System.exit(0);
 		}
 		if(cityNodeList.size() != 0)
 			cityNodeList = new ArrayList<>();
@@ -503,7 +525,9 @@ public class Engine {
 			readFile = new Scanner(new File("road(2).dat"));
 		} catch (FileNotFoundException e) {
 			
-			e.printStackTrace();
+			ui.error(12);
+			ui.menu(6);
+			System.exit(0);
 		}
 		while(readFile.hasNext()) {
 			int from = Integer.parseInt(readFile.next());

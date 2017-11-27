@@ -87,7 +87,7 @@ public class UserInterface {
 		
 		switch(operation){
 		
-		case 1: System.out.println("Q Query the city information by entering the city code.\n"
+		case 1: System.out.println("\nQ Query the city information by entering the city code.\n"
 									+ "D Find the minimum distance between two cities.\n"
 									+ "I Insert a road by entering two city codes and distance.\n"
 									+ "R Remove an existing road by entering two city codes.\n"
@@ -102,7 +102,8 @@ public class UserInterface {
 				break;
 		case 5: System.out.print("City Codes and distance: ");
 				break;
-		case 6: System.out.print("Thank your for using my program");
+		case 6: System.out.print("Program has exited.\n" 
+								  + "Thank you for using my program");
 				break;
 
 		}
@@ -174,9 +175,15 @@ public class UserInterface {
 									+ "To see the menu, press H");
 				break;
 		case 2: System.out.println("Error: Spaces must be used to seperate inputs.\n"
-								   + "       Inputs can not contain any special characters");
+								   + "       Inputs can not contain any special characters\n"
+								   + "Ex: I AN BO 78\n" 
+								   + "Ex: !@#$%^&*-=+ etc. are not allowed");
 				break;
-		case 3: System.out.println("Error: Wrong amount of inputs were entered for this command");
+		case 3: System.out.println("Error: Wrong amount of inputs were entered for this command\n"
+								    + "Ex: Q AN\n"
+								    + "    D AN BK\n"
+								    + "    I AN BO 45\n"
+								    + "    R AN BK");
 				break;
 		case 4: System.out.println("Error: City you have entered does not exist");
 				break;
@@ -186,14 +193,19 @@ public class UserInterface {
 				break;
 		case 7: System.out.println("Error: Distance entered must be a number");
 				break;
-		case 8: System.out.println("Error: Distance error can not be negative");
+		case 8: System.out.println("Error: Distance can not be negative");
 				break;
 		case 9: System.out.println("Please try again\n");
 				break;
 		case 10:System.out.println("Error: Input can not be a number");
 				break;
-		case 11: System.out.println("Error: Input can not have any special characters");
+		case 11: System.out.println("Error: Input can not have any special characters\n"
+									+ "Ex: !@#$%^&*-=+ etc. are not allowed");
 				break;
+		case 12:System.out.println("Error: File not found");
+				break;
+		case 13:System.out.println("Error: Cities entered must be different\n"
+								   + "Ex: AN BK");
 		}
 			
 	}
