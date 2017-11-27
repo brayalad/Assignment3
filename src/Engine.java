@@ -417,7 +417,7 @@ public class Engine {
 								graph.removeEdge(from.getCityNumber(), to.getCityNumber());
 								ui.printGraphManipulation(from.getCityName(), to.getCityName(), 0, 2);
 							}else {//Rest of method sends different error messages depending on the error committed
-								ui.error(1,from.getCityName(),to.getCityName());
+								ui.error(2,from.getCityName(),to.getCityName());
 								ui.error(9);
 							}
 						}else {
