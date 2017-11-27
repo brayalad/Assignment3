@@ -176,13 +176,8 @@ public class UserInterface {
 				break;
 		case 2: System.out.println("Error: Spaces must be used to seperate inputs.\n"
 								   + "       Inputs can not contain any special characters\n"
-<<<<<<< Updated upstream
 								   + "Ex: I AN BO 78\n" 
 								   + "Ex: !@#$%^&*-=+ etc. are not allowed");
-=======
-								   + "Ex: D CH PH" 
-								   + "!@#$%^&* ect. are not allowed");
->>>>>>> Stashed changes
 				break;
 		case 3: System.out.println("Error: Wrong amount of inputs were entered for this command\n"
 								    + "Ex: Q AN\n"
