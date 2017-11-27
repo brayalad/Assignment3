@@ -1,22 +1,32 @@
-
+/**
+ * This is the PriorityQueue class. This class is responsible for making
+ * a min heap and containing all its various functions such as 
+ * add, remove, contains, etc. Almost every method in here will be used 
+ * in some way by the Engine, which will allow the engine to manipulate
+ * the heap however the user may want as long as it is allowed by the 
+ * program. This is reused code from my previous project in which a 
+ * max heap was made. This code was changed to become a min heap to 
+ * act as a priority queue that will be used by the Dijkstra class 
+ * when calculating the the shortest path between two cities.
+ * 
+ * @author blayala
+ *
+ */
 public class PriorityQueue {
 	/**
 	 * This is an array that will represent the heap
 	 */
 	private QueueNode[] heap;
 	/**
-	 * The last index of the array that is representing 
-	 * the heap
+	 * The last index of the array that is representing the heap
 	 */
 	private int lastIndex;
 	/**
-	 * the number of swaps made while creating the heap 
-	 * using the optimal method
+	 * the number of swaps made while creating the heap using the optimal method
 	 */
 	private int optimalSwaps = 0;
 	/**
-	 * the number of swaps made while creating the heap 
-	 * using series of insertions
+	 * the number of swaps made while creating the heap using series of insertions
 	 */
 	private int seriesSwaps = 0;
 	/**
@@ -30,8 +40,7 @@ public class PriorityQueue {
 	
 
 	/**
-	 * Default constructor which will call on the second 
-	 * constructor while passing in the DEFAULT_SIZE
+	 * Default constructor which will call on the second constructor while passing in the DEFAULT_SIZE
 	 */
 	public PriorityQueue() {
 		this(DEFAULT_SIZE);
@@ -40,13 +49,9 @@ public class PriorityQueue {
 	/**
 	 * This constructor creates an array that will represent the heap.
 	 * This is the beginning of creating a heap using a series of insertions
-	 * @param startingSize
+	 * @param startingSize the size that the initial heap will be
 	 */
 	public PriorityQueue(int startingSize) {
-		//if(startingSize < DEFAULT_SIZE)
-			//startingSize = DEFAULT_SIZE;
-		//else
-			//checkCapacity(startingSize);
 		
 		QueueNode[] tempHeap = new QueueNode[startingSize + 1];
 		heap = tempHeap;
@@ -59,7 +64,7 @@ public class PriorityQueue {
 	 * optimal method. It does this by taking in an array of data and 
 	 * inputing it into a un-heaped heap. The reheap method is then run
 	 * recursively on the heap until the heap is heapified
-	 * @param data
+	 * @param data the array of data that the heap will be 
 	 */
 	public PriorityQueue(QueueNode[] data){
 		this((data.length));
@@ -74,35 +79,37 @@ public class PriorityQueue {
 	}
 	
 	/**
-	 * This method adds to the heap with a series of integers, making all the 
-	 * swaps needed to make the array a heap
+	 * This method adds to the heap, keeping the array a min heap 
+	 * based on distance between two cities, making all the 
+	 * swaps needed to make the array a min heap
 	 */
-	
-	
 	public void add(City cityEntry, int distance) {
 		
 		checkInitialization();
 	
 		int newIndex = lastIndex + 1;
 		int parentIndex = newIndex / 2;
+		
 		while((parentIndex > 0) && (distance < heap[parentIndex].distance)) {
 			heap[newIndex] = heap[parentIndex];
 			seriesSwaps++;
 			newIndex = parentIndex;
 			parentIndex = newIndex / 2;
 		}
+		
 		heap[newIndex] = new QueueNode(cityEntry, distance);
 		lastIndex++;
-		
-		
+	
 	}
 	
-	
 	/**
-	 * This removes the max number in the array representing the heap
+	 * This removes the city with the smallest distance in the array representing the heap
+	 * @return the city with smallest distance
 	 */
 	public QueueNode removeMin() {
+		
 		checkInitialization();
+		
 		QueueNode root = null;
 		if(!isEmpty()) {
 			root = heap[1];
@@ -113,17 +120,23 @@ public class PriorityQueue {
 			if((lastIndex + 1) <= heap.length )
 				heap[lastIndex + 1] = null;
 		}
+		
 		return root;
+		
 	}
 	
-	
-	
+	/**
+	 * This removes the city with the smallest distance that matches 
+	 * the city code provided. 
+	 * @param cityCode the city code of the city that needs to be removed
+	 * @return returns the city that was deleted
+	 */
 	public QueueNode remove(int cityCode) {
 		
 		QueueNode deleted = null;
+		
 		if(!isEmpty()) {
 			int removeIndex = searchRemoveIndex(cityCode);
-			//System.out.println(removeIndex);
 			deleted = heap[removeIndex];
 			heap[removeIndex] = heap[lastIndex];
 			lastIndex--;
@@ -132,16 +145,17 @@ public class PriorityQueue {
 			if((lastIndex + 1) <= heap.length )
 				heap[lastIndex + 1] = null;
 		}
-		
-		
-		
-		
-		
+	
 		return deleted;
 	}
 	
-	
-	public int searchRemoveIndex(int cityCode) {
+	/**
+	 * This method searches through the heap and searches for the index
+	 * that contains the city that matches the city code
+	 * @param cityCode the city code of the city that needs to be removed
+	 * @return the index that contains the city that needs to be removed
+	 */
+	private int searchRemoveIndex(int cityCode) {
 		
 		int removalIndex = 0;
 	
@@ -155,7 +169,8 @@ public class PriorityQueue {
 	
 	
 	/**
-	 * This returns the max number in the array representing the max heap
+	 * returns the city with the smallest distance
+	 * @return the city with smallest distance
 	 */
 	public QueueNode getMin() {
 		QueueNode root = null;
@@ -165,7 +180,9 @@ public class PriorityQueue {
 	}
 	
 	/**
-	 * Checks if the array representing the heap is empty
+	 * checks if the heap is empty. If the last index of the heap is less than
+	 * zero, that means that the heap is empty
+	 * @return if the heap is empty
 	 */
 	public boolean isEmpty() {
 		
@@ -173,7 +190,8 @@ public class PriorityQueue {
 	}
 
 	/**
-	 * returns size of the heap
+	 * gets the size of the heap
+	 * @return last index of the array heap
 	 */
 	public int getSize() {
 		
@@ -183,7 +201,7 @@ public class PriorityQueue {
 	/**
 	 * checks if array has capacity
 	 * @param startingSize the starting size
-	 * @return fits
+	 * @return fits boolean of whether the new element fits
 	 */
 	public boolean checkCapacity(int startingSize){
 		boolean fits = false;
@@ -204,10 +222,14 @@ public class PriorityQueue {
 	/**
 	 * This method reheaps a heap that is out of order at any root given.
 	 * The engine enters a root and the reheap method will heapify the array
-	 * from the root down
+	 * from the root down. Method is also called upon when a element is removed.
+	 * When a element is removed, this method will pass through the heap and 
+	 * make sure a min heap is kept, if not it will transform it back into a 
+	 * min heap.
 	 * @param rootIndex the root of the heap or sub-heap
 	 */
 	private void reheap(int rootIndex) {
+		
 		boolean done = false;
 		QueueNode orphan = heap[rootIndex];
 		int leftChildIndex = 2 * rootIndex;
@@ -245,7 +267,7 @@ public class PriorityQueue {
 	}
 	/**
 	 * returns array representing heap to engine
-	 * @return heap array
+	 * @return heap the array that containts the heap
 	 */
 	public QueueNode[] getHeap() {
 		return heap;
@@ -275,7 +297,7 @@ public class PriorityQueue {
 	
 	/**
 	 * returns number of swaps made using series of insertions
-	 * @return seriesSwaps
+	 * @return seriesSwaps the number of swaps made during series insertions
 	 */
 	public int getSeriesSwaps(){
 		return seriesSwaps;
@@ -283,28 +305,40 @@ public class PriorityQueue {
 	
 	/**
 	 * returns number of swaps made using optimal method
-	 * @return optimalMethod
+	 * @return optimalMethod swaps made using optimal method
 	 */
 	public int getOptimalSwaps(){
 		return optimalSwaps;
 	}
 }
 
+/**
+ * This is the class of the node that will hold the information
+ * in the heap. The Nodes contain the city and the distance that 
+ * the city has to whatever other city.
+ * @author blayala
+ *
+ */
 class QueueNode{
 	
+	/**
+	 * This is the city that is being checked
+	 */
 	City city;
+	/**
+	 * This is the city code of the city being checked
+	 */
 	int cityCode;
+	/**
+	 * This contains the current relaxed distance of the city being checked
+	 */
 	int distance;
-	City previous;
 	
-	public QueueNode(City city, int distance, City previous) {
-	
-		this.city = city;
-		this.distance = distance;
-		this.previous = previous;
-		
-		
-	}
+	/**
+	 * This is constructor of the node. It instantiates both the city and the relaxed distance
+	 * @param city the city being checked
+	 * @param distance the relaxed distance of the city being checked
+	 */
 	public QueueNode(City city, int distance) {
 		
 		this.city = city;
@@ -312,15 +346,30 @@ class QueueNode{
 		cityCode = city.getCityNumber();
 	}
 	
+	/**
+	 * Gets the city being checked
+	 * @return the city being checked
+	 */
 	public City getCity() {
 		return city;
 	}
+	/**
+	 * Gets the relaxed distance of the city being checked
+	 * @return returns relaxed distance
+	 */
 	public int getDistance() {
 		return distance;
 	}
+	/**
+	 * Gets the city code of the city being checked
+	 * @return the city code of the city being checked
+	 */
 	public int getCityCode() {
 	return cityCode;
 	}
+	/**
+	 * Overide of the toString method. Translates the node object into a readable string
+	 */
 	public String toString() {
 		return ""+ city+ " "+ distance;
 	}

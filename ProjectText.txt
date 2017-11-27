@@ -1,8 +1,0 @@
-Please enter the initial sequence of values: 
-Enter a command:	
-already exists, ignore.	
-does not exist!	
-That command doesn't exist!\n Please enter H if you need help.	
-Thank you for using the program!	
-Insert a value\nD Delete a value\nP Find predecessor\nS Find successor\nE Exit the program\nH Display this message\n
-	
