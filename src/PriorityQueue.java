@@ -12,11 +12,11 @@
  * @author blayala
  *
  */
-public class PriorityQueue {
+public class PriorityQueue<N,T> {
 	/**
 	 * This is an array that will represent the heap
 	 */
-	private QueueNode[] heap;
+	private QueueNode<N,T>[] heap;
 	/**
 	 * The last index of the array that is representing the heap
 	 */
@@ -24,11 +24,11 @@ public class PriorityQueue {
 	/**
 	 * the number of swaps made while creating the heap using the optimal method
 	 */
-	private int optimalSwaps = 0;
+	private int optimalSwaps;
 	/**
 	 * the number of swaps made while creating the heap using series of insertions
 	 */
-	private int seriesSwaps = 0;
+	private int seriesSwaps;
 	/**
 	 * Boolean checking if the heap has been initialized
 	 */
@@ -53,10 +53,13 @@ public class PriorityQueue {
 	 */
 	public PriorityQueue(int startingSize) {
 		
-		QueueNode[] tempHeap = new QueueNode[startingSize + 1];
+		@SuppressWarnings("unchecked")
+		QueueNode<N,T>[] tempHeap = new QueueNode[startingSize + 1];
 		heap = tempHeap;
 		lastIndex = 0;
 		initialized = true;
+		optimalSwaps = 0;
+		seriesSwaps = 0;
 	}
 	
 	/**
@@ -66,7 +69,7 @@ public class PriorityQueue {
 	 * recursively on the heap until the heap is heapified
 	 * @param data the array of data that the heap will be 
 	 */
-	public PriorityQueue(QueueNode[] data){
+	public PriorityQueue(QueueNode<N,T>[] data){
 		this((data.length));
 		lastIndex = heap.length - 1;
 		assert initialized = true;
@@ -83,21 +86,24 @@ public class PriorityQueue {
 	 * based on distance between two cities, making all the 
 	 * swaps needed to make the array a min heap
 	 */
-	public void add(City cityEntry, int distance) {
+	@SuppressWarnings("unchecked")
+	public void add(T cityEntry, N distance) {
 		
 		checkInitialization();
 	
 		int newIndex = lastIndex + 1;
 		int parentIndex = newIndex / 2;
 		
-		while((parentIndex > 0) && (distance < heap[parentIndex].distance)) {
+		while((parentIndex > 0) && ((Comparable<String>) distance).compareTo((String) heap[parentIndex].distance) < 0) {
 			heap[newIndex] = heap[parentIndex];
 			seriesSwaps++;
 			newIndex = parentIndex;
 			parentIndex = newIndex / 2;
 		}
 		
-		heap[newIndex] = new QueueNode(cityEntry, distance);
+		
+		
+		heap[newIndex] = new QueueNode<N, T>(cityEntry, distance, ((QueueNode<N,T>) cityEntry).getCityCode());
 		lastIndex++;
 	
 	}
@@ -106,11 +112,11 @@ public class PriorityQueue {
 	 * This removes the city with the smallest distance in the array representing the heap
 	 * @return the city with smallest distance
 	 */
-	public QueueNode removeMin() {
+	public QueueNode<N,T> removeMin() {
 		
 		checkInitialization();
 		
-		QueueNode root = null;
+		QueueNode<N,T> root = null;
 		if(!isEmpty()) {
 			root = heap[1];
 			heap[1] = heap[lastIndex];
@@ -131,9 +137,9 @@ public class PriorityQueue {
 	 * @param cityCode the city code of the city that needs to be removed
 	 * @return returns the city that was deleted
 	 */
-	public QueueNode remove(int cityCode) {
+	public QueueNode<N,T> remove(N cityCode) {
 		
-		QueueNode deleted = null;
+		QueueNode<N,T> deleted = null;
 		
 		if(!isEmpty()) {
 			int removeIndex = searchRemoveIndex(cityCode);
@@ -155,13 +161,14 @@ public class PriorityQueue {
 	 * @param cityCode the city code of the city that needs to be removed
 	 * @return the index that contains the city that needs to be removed
 	 */
-	private int searchRemoveIndex(int cityCode) {
+	@SuppressWarnings("unchecked")
+	private int searchRemoveIndex(N cityCode) {
 		
 		int removalIndex = 0;
 	
 		for(int i = 1; i <= lastIndex; i++) {
 			
-			if(cityCode == heap[i].getCityCode())
+			if(((Comparable<String>) cityCode).compareTo((String) heap[i].getCityCode()) == 0)
 				removalIndex = i;
 		}
 		return removalIndex;
@@ -172,8 +179,8 @@ public class PriorityQueue {
 	 * returns the city with the smallest distance
 	 * @return the city with smallest distance
 	 */
-	public QueueNode getMin() {
-		QueueNode root = null;
+	public QueueNode<N,T> getMin() {
+		QueueNode<N,T> root = null;
 		if(!isEmpty())
 			root = heap[1];
 		return root;
@@ -228,21 +235,22 @@ public class PriorityQueue {
 	 * min heap.
 	 * @param rootIndex the root of the heap or sub-heap
 	 */
+	@SuppressWarnings("unchecked")
 	private void reheap(int rootIndex) {
 		
 		boolean done = false;
-		QueueNode orphan = heap[rootIndex];
+		QueueNode<N,T> orphan = heap[rootIndex];
 		int leftChildIndex = 2 * rootIndex;
 		
 		while(!done && (leftChildIndex <= lastIndex )){
 			int largerChildIndex = leftChildIndex;
 			int rightChildIndex = leftChildIndex + 1;
 			
-				
-			if((rightChildIndex <= lastIndex  && heap[rightChildIndex].getDistance() < heap[largerChildIndex].getDistance())) 
+			if((rightChildIndex <= lastIndex  && ((Comparable<String>) heap[rightChildIndex].getDistance()).compareTo((String) heap[largerChildIndex].getDistance()) < 0))
+			//if((rightChildIndex <= lastIndex  && heap[rightChildIndex].getDistance() < heap[largerChildIndex].getDistance())) 
 				largerChildIndex = rightChildIndex;
 			
-			if(orphan.distance > heap[largerChildIndex].distance) {
+			if(((Comparable<String>) orphan.distance).compareTo((String) heap[largerChildIndex].distance) > 0) {
 				heap[rootIndex] = heap[largerChildIndex];
 				optimalSwaps++;
 				rootIndex = largerChildIndex;
@@ -259,7 +267,7 @@ public class PriorityQueue {
 	 * @param index searching for
 	 * @return data in index
 	 */
-	public QueueNode getHeapIndexData(int index) {
+	public QueueNode<N,T> getHeapIndexData(int index) {
 		return heap[index];
 	}
 	public int getLastIndex(){
@@ -269,8 +277,8 @@ public class PriorityQueue {
 	 * returns array representing heap to engine
 	 * @return heap the array that containts the heap
 	 */
-	public QueueNode[] getHeap() {
-		return heap;
+	public QueueNode<N,T>[] getHeap() {
+		return getHeap();
 	}
 	
 	/**
@@ -286,7 +294,7 @@ public class PriorityQueue {
 	 * @param entry being check for duplicates
 	 * @return if the entry is already in heap
 	 */
-	public boolean contains(QueueNode node){
+	public boolean contains(QueueNode<N,T> node){
 		boolean contains = false;
 		for(int i = 0; i < heap.length; i++){
 			if(heap[i] == node)
@@ -319,52 +327,52 @@ public class PriorityQueue {
  * @author blayala
  *
  */
-class QueueNode{
+class QueueNode<N,T>{
 	
 	/**
 	 * This is the city that is being checked
 	 */
-	City city;
+	T city;
 	/**
 	 * This is the city code of the city being checked
 	 */
-	int cityCode;
+	N cityCode;
 	/**
 	 * This contains the current relaxed distance of the city being checked
 	 */
-	int distance;
+	N distance;
 	
 	/**
 	 * This is constructor of the node. It instantiates both the city and the relaxed distance
 	 * @param city the city being checked
 	 * @param distance the relaxed distance of the city being checked
 	 */
-	public QueueNode(City city, int distance) {
+	public QueueNode(T city, N distance, N cityNumber) {
 		
 		this.city = city;
 		this.distance = distance;
-		cityCode = city.getCityNumber();
+		cityCode = cityNumber;
 	}
 	
 	/**
 	 * Gets the city being checked
 	 * @return the city being checked
 	 */
-	public City getCity() {
+	public T getCity() {
 		return city;
 	}
 	/**
 	 * Gets the relaxed distance of the city being checked
 	 * @return returns relaxed distance
 	 */
-	public int getDistance() {
+	public N getDistance() {
 		return distance;
 	}
 	/**
 	 * Gets the city code of the city being checked
 	 * @return the city code of the city being checked
 	 */
-	public int getCityCode() {
+	public N getCityCode() {
 	return cityCode;
 	}
 	/**

@@ -22,7 +22,8 @@ public class Digraph {
 	  * @param vertices the number of cities/vertices
 	  * @param cityNodes array of cities available
 	  */
-	 public Digraph(int vertices, City[] cityNodes) {
+	 @SuppressWarnings("rawtypes")
+	public Digraph(int vertices, City[] cityNodes) {
 		this.vertices = vertices;
 		graphMatrix = new int[vertices + 1][vertices + 1];
 		
@@ -32,11 +33,11 @@ public class Digraph {
 	 * Adds an edge/road to the adjacency matrix
 	 * @param from city number of departure city
 	 * @param to city number of destination city
-	 * @param edge weight/distance of edge/road added
+	 * @param weight weight/distance of edge/road added
 	 */
-	 public void addEdge(int from, int to, int edge) {
+	 public void addEdge(Object from, Object to, Object weight) {
 		
-		graphMatrix[from][to] = edge;
+		graphMatrix[(int) from][(int) to] = (int) weight;
 		
 	 }
 	
@@ -45,9 +46,9 @@ public class Digraph {
 	  * @param from city number of departure city
 	  * @param to city number of destination city
 	  */
-	 public void removeEdge(int from, int to) {
+	 public void removeEdge(Object from, Object to) {
 		
-		graphMatrix[from][to] = 0;
+		graphMatrix[(int) from][(int) to] = 0;
 		
 	 }
 	
@@ -56,15 +57,15 @@ public class Digraph {
 	  * @param from city number of departure city
 	  * @param to city number of destination city
 	  */
-	 public int getEdge(int from, int to) {
+	 public int getEdge(Object from, Object to) {
 	
-		return graphMatrix[from][to];
+		return graphMatrix[(int) from][(int) to];
 		
 	 }
 	
 	 /**
 	  * returns the adjacency matrix that represents the graph
-	  * @return the graph matix
+	  * @return the graph matrix
 	  */
 	 public int[][] getGraphMatrix(){
 		return graphMatrix;

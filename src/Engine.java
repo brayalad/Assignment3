@@ -32,12 +32,14 @@ public class Engine {
 	 * read from file provided and transfered into this array list. An array list was used so that this program will be
 	 * usable with other files that contain a different number of cities.
 	 */
+	@SuppressWarnings("rawtypes")
 	private ArrayList<City> cityNodeList;
 	/**
 	 * This is an array list that holds the road nodes while the file that contains roads is being read. Roads are 
 	 * read from file provided and transfered into this array list. An array list was used so that this program will be
 	 * usable with other files that contain a different number of roads.
 	 */
+	@SuppressWarnings("rawtypes")
 	private ArrayList<Road> roadNodeList;
 	/**
 	 * This is the instance of the Dijkstra class. This class contains the Dijkstra algorithm which the engine class uses to 
@@ -135,12 +137,13 @@ public class Engine {
 	 * @param roadNodes The array that contains the initial roads that exist
 	 * @throws FileNotFoundException
 	 */
+	@SuppressWarnings("rawtypes")
 	private void createGraph(Road[] roadNodes) throws FileNotFoundException {
 		
 		graph = new Digraph(getCityNodes().length, getCityNodes());
 		
 		for(int i = 1; i < roadNodes.length; i++) 
-			graph.addEdge(roadNodes[i].getFrom().getCityNumber(), roadNodes[i].getTo().getCityNumber(), roadNodes[i].getWeight());
+			graph.addEdge(((City) roadNodes[i].getFrom()).getCityNumber(), ((City) roadNodes[i].getTo()).getCityNumber(), roadNodes[i].getWeight());
 	}
 	
 	/**
@@ -180,6 +183,7 @@ public class Engine {
 					 * for this certain command
 					 */
 					if(searchCityCode.length == 1) {
+						@SuppressWarnings("rawtypes")
 						City searchingCity = cityExist(searchCityCode[0]);
 						if(searchingCity != null) {
 							ui.printCity(searchingCity);
@@ -236,15 +240,15 @@ public class Engine {
 				 */
 				if(searchCityCodes.length == 2 ) {
 			
-					City from = cityExist(searchCityCodes[0]);
-					City to = cityExist(searchCityCodes[1]);
+					City<?, ?> from = cityExist(searchCityCodes[0]);
+					City<?, ?> to = cityExist(searchCityCodes[1]);
 					
 					//This if statement checks to see that the cities inputed exist
 					if(from != null && to != null) {
 						//This if statement checks if from and to cities are the same
 						if(from != to && to != from) {
 							dijkstra = new Dijkstra(getCityNodes(), graph, from.getCityNumber(), to.getCityNumber()); 
-							ui.printShortestPath(from.getCityName(), to.getCityName(), dijkstra.dikstra()[to.getCityNumber()], dijkstra.getPath());
+							ui.printShortestPath(from.getCityName(), to.getCityName(), dijkstra.dikstra()[(int) to.getCityNumber()], dijkstra.getPath());
 						}else {//Rest of method sends different error messages depending on the error committed
 							ui.error(13);
 							ui.error(9);
@@ -274,13 +278,14 @@ public class Engine {
 	 * @param searchCityCode the unique code of the city being searched
 	 * @return the searched city
 	 */
-	private City cityExist(String searchCityCode){
+	private City<?, ?> cityExist(String searchCityCode){
 		
+		@SuppressWarnings("rawtypes")
 		City[] cities = getCityNodes();
-		City searchCity = null;
+		City<?, ?> searchCity = null;
 		
 		for(int i = 1; i < cities.length; i++)
-			if(cities[i].getCityCode().equalsIgnoreCase(searchCityCode))
+			if(((String) cities[i].getCityCode()).equalsIgnoreCase(searchCityCode))
 				searchCity = cities[i];
 	
 		return searchCity;
@@ -324,8 +329,8 @@ public class Engine {
 					 * for this certain command
 					 */
 					if(roadAdded.length == 3) {
-						City from = cityExist(roadAdded[0]);
-						City to = cityExist(roadAdded[1]);
+						City<?, ?> from = cityExist(roadAdded[0]);
+						City<?, ?> to = cityExist(roadAdded[1]);
 						int distance = Integer.MIN_VALUE;
 						try {
 							distance = Integer.parseInt(roadAdded[2]);
@@ -403,8 +408,8 @@ public class Engine {
 				 * for this certain command
 				 */
 				if(roadAdded.length == 2) {
-					City from = cityExist(roadAdded[0]);
-					City to = cityExist(roadAdded[1]);
+					City<?, ?> from = cityExist(roadAdded[0]);
+					City<?, ?> to = cityExist(roadAdded[1]);
 					/*
 					 * This part of the method checks to see if the cities and road that are being entered
 					 * exist and also checks to see if the distance is not a negative number
@@ -443,6 +448,7 @@ public class Engine {
 	 * This method contains the data of cities from the file read
 	 * @return an array of cities read from the file
 	 */
+	@SuppressWarnings("rawtypes")
 	private City[] getCityNodes() {
 		City[] cityNodes = new City[cityNodeList.size()+1];
 		for(int i = 1; i < cityNodes.length; i++)
@@ -455,6 +461,7 @@ public class Engine {
 	 * This method contains the data of the roads from the file read
 	 * @return an array of roads read from the file
 	 */
+	@SuppressWarnings("rawtypes")
 	private Road[] getRoadNodes() {
 		Road[] roadNodes = new Road[roadNodeList.size()+1];
 		for(int i = 1; i < roadNodes.length; i++)
@@ -508,7 +515,7 @@ public class Engine {
 			int population = Integer.parseInt(readFile.next());
 			int elevation = Integer.parseInt(readFile.next());
 			
-			cityNodeList.add(new City(cityNumber, cityCode, fullCityName, population, elevation));
+			cityNodeList.add(new City<Integer, String>(cityNumber, cityCode, fullCityName, population, elevation));
 		}
 	}
 	
@@ -534,7 +541,7 @@ public class Engine {
 			int to = Integer.parseInt(readFile.next());
 			int distance = Integer.parseInt(readFile.next());
 	
-			roadNodeList.add(new Road(getCityNodes()[from], getCityNodes()[to], distance));
+			roadNodeList.add(new Road<Integer, City<?, ?>>(getCityNodes()[from], getCityNodes()[to], distance));
 		}
 	}
 		

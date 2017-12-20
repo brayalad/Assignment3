@@ -119,7 +119,7 @@ public class UserInterface {
 	 * @param distance
 	 * @param operation
 	 */
-	public void printGraphManipulation(String from, String to, int distance, int operation) {
+	public void printGraphManipulation(Object from, Object to, int distance, int operation) {
 		
 		switch(operation) {
 		
@@ -140,7 +140,7 @@ public class UserInterface {
 	 * @param distance the weight of the path
 	 * @param path the array list containing the shortest path
 	 */
-	public void printShortestPath(String from, String to, int distance, ArrayList<City> path) {
+	public void printShortestPath(Object from, Object to, int distance, @SuppressWarnings("rawtypes") ArrayList<City> path) {
 		
 		System.out.println("The minimum distance between " + from + " and " + to + " is " + distance + " through the route:");
 		
@@ -158,7 +158,7 @@ public class UserInterface {
 	 * a query on the city
 	 * @param city the city being queried
 	 */
-	public void printCity(City city) {
+	public void printCity(City<?, ?> city) {
 		System.out.println(city + "\n");
 	}
 	
@@ -217,7 +217,7 @@ public class UserInterface {
 	 * @param from departing city
 	 * @param to destination city
 	 */
-	public void error(int operation, String from, String to) {
+	public void error(int operation, Object from, Object to) {
 		
 		switch(operation) {
 		

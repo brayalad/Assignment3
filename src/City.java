@@ -6,28 +6,28 @@
  * @author blayala
  *
  */
-public class City {
+public class City<N,T> {
 	
 	/**
 	 * This is the city number of the city. Every city has a unique city number
 	 */
-	private int cityNumber;
+	private N cityNumber;
 	/**
 	 * This is the city code of the city. Every city has a unique city code
 	 */
-	private String cityCode;
+	private T cityCode;
 	/**
 	 * This is the full city name of the city is represents
 	 */
-	private String fullCityName;
+	private T fullCityName;
 	/**
 	 * This the population of the city
 	 */
-	private int population;
+	private N population;
 	/**
 	 * This is the elevation of the city
 	 */
-	private int elevation;
+	private N elevation;
 	
 	/**
 	 * This is the constructor that instantiates the fields with their respective values
@@ -37,7 +37,7 @@ public class City {
 	 * @param population city's population
 	 * @param elevation city's elevation
 	 */
-	public City(int cityNumber, String cityCode, String fullCityName, int population, int elevation) {
+	public City(N cityNumber, T cityCode, T fullCityName, N population, N elevation) {
 		
 		this.cityNumber = cityNumber;
 		this.cityCode = cityCode;
@@ -51,21 +51,21 @@ public class City {
 	 * gets the city's number
 	 * @return city number
 	 */
-	public int getCityNumber() {
+	public N getCityNumber() {
 		return cityNumber;
 	}
 	/**
 	 * gets the city's code
 	 * @return city code
 	 */
-	public String getCityCode() {
+	public T getCityCode() {
 		return cityCode;
 	}
 	/**
 	 * gets the city's full city name
 	 * @return full city name
 	 */
-	public String getCityName() {
+	public T getCityName() {
 		return fullCityName;
 	}
 	/**

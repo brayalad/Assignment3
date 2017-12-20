@@ -5,20 +5,20 @@
  * @author blayala
  *
  */
-public class Road {
+public class Road<N,T> {
 
 	/**
 	 * The departing city
 	 */
-	private City from;
+	private T from;
 	/**
 	 * The destination city
 	 */
-	private City to;
+	private T to;
 	/**
 	 * The distance between the from and to city
 	 */
-	private int weight;
+	private N weight;
 	
 	/**
 	 * This is the constructor for the road that instantiates all the fields with their respective values
@@ -26,7 +26,7 @@ public class Road {
 	 * @param to the destination city
 	 * @param weight the amount of distance bwtween the from and to city
 	 */
-	public Road(City from, City to, int weight) {
+	public Road(T from, T to, N weight) {
 		
 		this.from = from;
 		this.to = to;
@@ -38,21 +38,21 @@ public class Road {
 	 * gets the departing city
 	 * @return from city
 	 */
-	public City getFrom() {
+	public T getFrom() {
 		return from;
 	}
 	/**
 	 * gets the destination city
 	 * @return to ctiy
 	 */
-	public City getTo() {
+	public T getTo() {
 		return to;
 	}
 	/**
 	 * gets the weight
 	 * @return distance between from and to 
 	 */
-	public int getWeight() {
+	public N getWeight() {
 		return weight;
 	}
 	/**

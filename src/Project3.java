@@ -8,7 +8,7 @@ import java.io.*;
  * for the user to traverse. The program allows the user to search for a city using its city code and query the info
  * about that city. The User is also allowed to calculated the shortest distance and path between two cities that are
  * chosen by the user. The user is also allowed to manipulate the graph by either adding non-existing roads/edges or 
- * removing already existing roads and edges.
+ * removing already existing roads and edges. This is the Generic Version of the Program
  * @author blayala
  *
  */
@@ -20,8 +20,8 @@ public class Project3 {
 	 * class is made, which is the class that runs the program and a instance of the UserInterface 
 	 * class is passed into its constructor so that the engine will be able to communicate more 
 	 * Efficiently with the UserInterface class
-	 * @param args
-	 * @throws IOException
+	 * @param args argument passed to main
+	 * @throws IOException all the IO exceptions
 	 */
 	public static void main(String[] args) throws IOException {
 			

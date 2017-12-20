@@ -28,10 +28,11 @@ public class Dijkstra {
 	/**
 	 * This is the priority queue that is used to find the smallest distance while calculating the shortest path
 	 */
-	private PriorityQueue availableVertices;
+	private PriorityQueue<Integer, City<?, ?>> availableVertices;
 	/**
 	 * An array that holds the cities/vertices that the graph contains
 	 */
+	@SuppressWarnings("rawtypes")
 	private City[] cityNodes;
 	/**
 	 * This is the city number of the destination that the user is looking for the shortest path to
@@ -41,6 +42,7 @@ public class Dijkstra {
 	 * This is an Array List that holds the shortest path. Array list is used because the path will
 	 * vary depending on source and destination
 	 */
+	@SuppressWarnings("rawtypes")
 	private ArrayList<City> path;
 	
 	/**
@@ -48,17 +50,18 @@ public class Dijkstra {
 	 * respective values
 	 * @param cityNodes an array that contains all the city/vertices in the graph
 	 * @param graph the Directed graph represented by an adjacency matrix
-	 * @param source city number of the source city
-	 * @param destination city number of the destination city
+	 * @param object city number of the source city
+	 * @param object2 city number of the destination city
 	 */
-	public Dijkstra(City[] cityNodes, Digraph graph, int source, int destination) {
-		this.source = source;
+	@SuppressWarnings("rawtypes")
+	public Dijkstra(City[] cityNodes, Digraph graph, Object source, Object destination) {
+		this.source = (int) source;
 		graphMatrix = graph.getGraphMatrix();
 		distance = new int[graph.getGraphMatrix().length];
-		availableVertices = new PriorityQueue(graph.getGraphMatrix().length);
+		availableVertices = new PriorityQueue<Integer, City<?, ?>>(graph.getGraphMatrix().length);
 		predececor = new int[graph.getGraphMatrix().length];
 		this.cityNodes = cityNodes;
-		this.destination = destination;
+		this.destination = (int) destination;
 		path = new ArrayList<>();
 		
 	}
@@ -85,7 +88,7 @@ public class Dijkstra {
 		//runs until the priority queue is empty
 		while(!availableVertices.isEmpty()) {
 			
-			int u = availableVertices.removeMin().city.getCityNumber(); //city with smallest distance 
+			int u = (int) ((City<?, ?>) availableVertices.removeMin().city).getCityNumber(); //city with smallest distance 
 			
 			//for all neighbors of city/vertex being checked
 			for(int v = 1; v < graphMatrix.length-1; v++) {
@@ -117,6 +120,7 @@ public class Dijkstra {
 	 * This method calculates the shortest path from source to destination using an array list
 	 * @return shortest path from source to destination
 	 */
+	@SuppressWarnings("rawtypes")
 	public ArrayList<City> getPath(){
 		
 		ArrayList<City> backwardPath = new ArrayList<>(); //Original path is backwards (destination to source)
